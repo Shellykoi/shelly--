@@ -1,0 +1,1189 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>排课规则 - NiceAdmin Bootstrap Template</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Vendor CSS Files -->
+  <link href="../assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="../assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="../assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="../assets/vendor/quill/quill.snow.css" rel="stylesheet">
+  <link href="../assets/vendor/quill/quill.bubble.css" rel="stylesheet">
+  <link href="../assets/vendor/remixicon/remixicon.css" rel="stylesheet">
+  <link href="../assets/vendor/simple-datatables/style.css" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="../assets/css/style.css" rel="stylesheet">
+
+  <!-- 自定义样式 -->
+  <style>
+     .preference-card, .preference {
+    background: white;
+    border-radius: 0.5rem;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+     .preference-card .card-header {
+    background-color: rgba(245, 249, 251, 0.8);
+    border-bottom: 1px solid rgba(245, 249, 251, 0.8);
+    padding: 0.75rem 1.25rem;
+    font-weight: 500;
+    -webkit-text-stroke: 0.3px currentColor; /* 极细的描边模拟加粗 */
+    color: #3A5985;
+    font-size: 1rem;
+    height: auto;
+  }
+  .preference .header{
+    background-color: rgba(245, 249, 251, 0.8);
+    border-bottom: 1px solid rgba(245, 249, 251, 0.8);
+    padding: 0.75rem 1.25rem;
+    font-weight: 500;
+    /*letter-spacing: 0.02em;*/ /* 轻微增加字距使文字更突出 */
+    -webkit-text-stroke: 0.3px currentColor; /* 极细的描边模拟加粗 */
+    color: #3A5985;
+    font-size: 1rem;
+    height: auto;
+
+  }
+
+  .preference-card .card-body, .preference .card-body {
+    padding: 1rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* 紧凑布局样式 */
+  .preference {
+    height: 100%;
+    margin-bottom: 0.5rem; /* 缩小两个框之间的间距 */
+  }
+/* 紧凑日历样式 */
+  .compact-calendar {
+    width: 100%;
+    border-radius: 0.5rem;
+    padding: 5px;
+  }
+
+  .calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+    padding: 0 3px;
+  }
+
+  .calendar-title {
+    font-weight: 600;
+    color: #3A5985;
+    font-size: 0.85rem;
+  }
+
+  .calendar-nav {
+    display: flex;
+    gap: 8px;
+     border: none;
+  }
+
+  .calendar-nav button {
+    background: none;
+    border: none;
+    font-size: 0.5rem;
+    cursor: pointer;
+    color: #3A5985;
+    padding: 0;
+    width: 10px;
+    height: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: background-color 0.2s;
+  }
+
+  .calendar-nav button:hover {
+    background-color: #f0f7ff;
+  }
+
+    .period-checkbox-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.2rem 4rem;
+    border-radius: 0.5rem;
+    margin-top: 0.3rem;
+  }
+     .period-checkbox-group1{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.2rem 3rem;
+    border-radius: 0.5rem;
+    margin-top: 0.3rem;
+  }
+      .period-checkbox-group3{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.2rem 1rem;
+    border-radius: 0.5rem;
+    margin-top: 0.3rem;
+  }
+     /* 时间范围组样式 */
+  .time-range-group {
+    display: flex;
+    align-items: center;
+    gap: 4rem;
+  }
+    /* 主容器样式 */
+    .main-container {
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      padding: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    /* 卡片样式 */
+   .rule-card {
+    background: white;
+    border-radius: 0.5rem;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+    height: 100%;
+  }
+
+  .rule-card .card-header {
+    background-color: rgba(245, 249, 251, 0.8);
+    border-bottom: 1px solid rgba(245, 249, 251, 0.8);
+    padding: 0.75rem 1.25rem;
+    font-weight: 500;
+    color: #3A5985;
+    font-size: 0.9rem;
+  }
+
+  .rule-card .card-body {
+    padding: 1rem;
+    font-size: 0.85rem;
+  }
+
+  /* 表单控件样式 */
+  .form-group {
+    margin-bottom: 0.8rem;
+  }
+
+  .form-group label {
+    font-weight: 500;
+    margin-bottom: 0.2rem;
+    color: #495057;
+  }
+
+  /* 复选框样式 */
+  .form-check-input {
+    width: 1.1em;
+    height: 1.1em;
+    margin-top: 0.15em;
+  }
+
+  /* 按钮样式 */
+  .btn-primary {
+    background-color: #89AFE0;
+    border-color: #89AFE0;
+  }
+
+    /* 网格布局 */
+    .rules-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    /* 搜索框样式 */
+    .search-box {
+      position: relative;
+    }
+
+    .search-box .bi-search {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #89AFE0;
+      pointer-events: none;
+    }
+
+    /* 响应式调整 */
+    @media (max-width: 768px) {
+      .rules-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    .form-control-sm{
+      min-height: calc(0.6em + .5rem + calc(var(--bs-border-width)* 2));!important;
+      padding: .25rem .5rem;
+      font-size: .875rem;
+    }
+    .form-control{
+      line-height: 0.6rem;!important;
+    }
+    .w-25 {
+        width: 15% !important;
+    }
+
+  </style>
+</head>
+
+<body>
+<!-- ======= Header 顶部部分======= -->
+  <header id="header" class="header fixed-top d-flex align-items-center">
+
+    <div class="d-flex align-items-center justify-content-between">
+      <a href="index.html" class="logo d-flex align-items-center">
+        <img src="assets/img/logo.png" alt="">
+        <span class="d-none d-lg-block">课境云枢排课系统</span>
+      </a>
+      <i class="bi bi-list toggle-sidebar-btn"></i>
+    </div><!-- End Logo -->
+
+    <div class="search-bar">
+      <form class="search-form d-flex align-items-center" method="POST" action="#">
+        <input type="text" name="query" placeholder="Search" title="Enter search keyword">
+        <button type="submit" title="Search"><i class="bi bi-search"></i></button>
+      </form>
+    </div><!-- End Search Bar -->
+
+    <nav class="header-nav ms-auto">
+      <ul class="d-flex align-items-center">
+
+        <li class="nav-item d-block d-lg-none">
+          <a class="nav-link nav-icon search-bar-toggle " href="#">
+            <i class="bi bi-search"></i>
+          </a>
+        </li><!-- End Search Icon-->
+
+        <li class="nav-item dropdown">
+
+          <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
+            <i class="bi bi-bell"></i>
+            <span class="badge bg-primary badge-number">4</span>
+          </a><!-- End Notification Icon -->
+
+          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
+            <li class="dropdown-header">
+              You have 4 new notifications
+              <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li class="notification-item">
+              <i class="bi bi-exclamation-circle text-warning"></i>
+              <div>
+                <h4>Lorem Ipsum</h4>
+                <p>Quae dolorem earum veritatis oditseno</p>
+                <p>30 min. ago</p>
+              </div>
+            </li>
+
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li class="notification-item">
+              <i class="bi bi-x-circle text-danger"></i>
+              <div>
+                <h4>Atque rerum nesciunt</h4>
+                <p>Quae dolorem earum veritatis oditseno</p>
+                <p>1 hr. ago</p>
+              </div>
+            </li>
+
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li class="notification-item">
+              <i class="bi bi-check-circle text-success"></i>
+              <div>
+                <h4>Sit rerum fuga</h4>
+                <p>Quae dolorem earum veritatis oditseno</p>
+                <p>2 hrs. ago</p>
+              </div>
+            </li>
+
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li class="notification-item">
+              <i class="bi bi-info-circle text-primary"></i>
+              <div>
+                <h4>Dicta reprehenderit</h4>
+                <p>Quae dolorem earum veritatis oditseno</p>
+                <p>4 hrs. ago</p>
+              </div>
+            </li>
+
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li class="dropdown-footer">
+              <a href="#">Show all notifications</a>
+            </li>
+
+          </ul><!-- End Notification Dropdown Items -->
+
+        </li><!-- End Notification Nav -->
+
+        <li class="nav-item dropdown">
+
+          <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
+            <i class="bi bi-chat-left-text"></i>
+            <span class="badge bg-success badge-number">3</span>
+          </a><!-- End Messages Icon -->
+
+          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages">
+            <li class="dropdown-header">
+              You have 3 new messages
+              <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li class="message-item">
+              <a href="#">
+                <img src="assets/img/messages-1.jpg" alt="" class="rounded-circle">
+                <div>
+                  <h4>Maria Hudson</h4>
+                  <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
+                  <p>4 hrs. ago</p>
+                </div>
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li class="message-item">
+              <a href="#">
+                <img src="assets/img/messages-2.jpg" alt="" class="rounded-circle">
+                <div>
+                  <h4>Anna Nelson</h4>
+                  <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
+                  <p>6 hrs. ago</p>
+                </div>
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li class="message-item">
+              <a href="#">
+                <img src="assets/img/messages-3.jpg" alt="" class="rounded-circle">
+                <div>
+                  <h4>David Muldon</h4>
+                  <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
+                  <p>8 hrs. ago</p>
+                </div>
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li class="dropdown-footer">
+              <a href="#">Show all messages</a>
+            </li>
+
+          </ul><!-- End Messages Dropdown Items -->
+
+        </li><!-- End Messages Nav -->
+
+        <li class="nav-item dropdown pe-3">
+
+          <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+            <img src="assets/img/profile-img.jpg" alt="Profile" class="rounded-circle">
+            <span class="d-none d-md-block dropdown-toggle ps-2">K. Anderson</span>
+          </a><!-- End Profile Iamge Icon -->
+
+          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
+            <li class="dropdown-header">
+              <h6>Kevin Anderson</h6>
+              <span>Web Designer</span>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li>
+              <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
+                <i class="bi bi-person"></i>
+                <span>My Profile</span>
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li>
+              <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
+                <i class="bi bi-gear"></i>
+                <span>Account Settings</span>
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li>
+              <a class="dropdown-item d-flex align-items-center" href="pages-faq.html">
+                <i class="bi bi-question-circle"></i>
+                <span>Need Help?</span>
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li>
+              <a class="dropdown-item d-flex align-items-center" href="#">
+                <i class="bi bi-box-arrow-right"></i>
+                <span>Sign Out</span>
+              </a>
+            </li>
+
+          </ul><!-- End Profile Dropdown Items -->
+        </li><!-- End Profile Nav -->
+
+      </ul>
+    </nav><!-- End Icons Navigation -->
+
+  </header><!-- End Header -->
+
+  <!-- ======= Sidebar侧边栏！！ ======= -->
+  <aside id="sidebar" class="sidebar">
+
+    <ul class="sidebar-nav" id="sidebar-nav">
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="index.html">
+          <i class="bi bi-grid"></i>
+          <span>首页</span>
+        </a>
+      </li><!-- End Dashboard Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-menu-button-wide"></i><span>基本数据</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+          <li>
+            <a href="基本数据-教室数据-yes引入elelment改进版本又改进版--已确定！.html">
+              <i class="bi bi-circle"></i><span>教室数据</span>
+            </a>
+          </li>
+          <li>
+            <a href="教师数据.html">
+              <i class="bi bi-circle"></i><span>教师信息</span>
+            </a>
+          </li>
+          <li>
+            <a href="components-badges.html">
+              <i class="bi bi-circle"></i><span>学生信息</span>
+            </a>
+          </li>
+          <li>
+            <a href="课程库.html">
+              <i class="bi bi-circle"></i><span>课程库</span>
+            </a>
+          </li>
+          <li>
+            <a href="专业数据.html">
+              <i class="bi bi-circle"></i><span>专业数据</span>
+            </a>
+          </li>
+          <li>
+            <a href="班级数据.html">
+              <i class="bi bi-circle"></i><span>班级数据</span>
+            </a>
+          </li>
+          <li>
+            <a href="教学楼数据.html">
+              <i class="bi bi-circle"></i><span>教学楼信息</span>
+            </a>
+          </li>
+          <li>
+            <a href="部门数据.html">
+              <i class="bi bi-circle"></i><span>部门数据</span>
+            </a>
+          </li>
+          <li>
+            <a href="专业数据.html">
+              <i class="bi bi-circle"></i><span>专业方向</span>
+            </a>
+          </li>
+          <!--<li>
+            <a href="components-tabs.html">
+              <i class="bi bi-circle"></i><span>Tabs</span>
+            </a>
+          </li>
+          <li>
+            <a href="components-pagination.html">
+              <i class="bi bi-circle"></i><span>Pagination</span>
+            </a>
+          </li>
+          <li>
+            <a href="components-progress.html">
+              <i class="bi bi-circle"></i><span>Progress</span>
+            </a>
+          </li>
+          <li>
+            <a href="components-spinners.html">
+              <i class="bi bi-circle"></i><span>Spinners</span>
+            </a>
+          </li>-->
+         <!-- <li>
+            <a href="components-tooltips.html">
+              <i class="bi bi-circle"></i><span>Tooltips</span>
+            </a>
+          </li>-->
+        </ul>
+      </li><!-- End Components Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-journal-text"></i><span>智能排课</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+          <li>
+            <a href="forms-elements.html">
+              <i class="bi bi-circle"></i><span>Form Elements</span>
+            </a>
+          </li>
+          <li>
+            <a href="forms-layouts.html">
+              <i class="bi bi-circle"></i><span>Form Layouts</span>
+            </a>
+          </li>
+          <li>
+            <a href="forms-editors.html">
+              <i class="bi bi-circle"></i><span>Form Editors</span>
+            </a>
+          </li>
+          <li>
+            <a href="forms-validation.html">
+              <i class="bi bi-circle"></i><span>Form Validation</span>
+            </a>
+          </li>
+        </ul>
+      </li><!-- End Forms Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-layout-text-window-reverse"></i><span>组织管理</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="tables-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+          <li>
+            <a href="偏好设置3.html">
+              <i class="bi bi-circle"></i><span>偏好设置</span>
+            </a>
+          </li>
+          <li>
+            <a href="整个页面！！！！！！！组织管理 请假审批--已确定！.html" >
+              <i class="bi bi-circle"></i><span>请假审批</span>
+            </a>
+          </li>
+        </ul>
+      </li><!-- End Tables Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#charts-nav" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-bar-chart"></i><span>排课表查询</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="charts-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+          <li>
+            <a href="班级课表.html">
+              <i class="bi bi-circle"></i><span>班级课表查询</span>
+            </a>
+          </li>
+          <li>
+            <a href="charts-apexcharts.html">
+              <i class="bi bi-circle"></i><span>学生课表查询</span>
+            </a>
+          </li>
+          <li>
+            <a href="charts-echarts.html">
+              <i class="bi bi-circle"></i><span>教师课表查询</span>
+            </a>
+          </li>
+          <li>
+            <a href="嵌入了elementuizz的页面-课程添加已确定！.html">
+              <i class="bi bi-circle"></i><span>添加课程</span>
+            </a>
+          </li>
+        </ul>
+      </li><!-- End Charts Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#icons-nav" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-gem"></i><span>排课规则</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="icons-nav" class="nav-content collapse show " data-bs-parent="#sidebar-nav">
+          <li>
+            <a href="排课规则-排课方案设置-yes大幅度修改了一下的--已确定.html">
+              <i class="bi bi-circle"></i><span>排课方案设置</span>
+            </a>
+          </li>
+          <li>
+            <a href="禁排omgomgomg.html">
+              <i class="bi bi-circle"></i><span>禁排设置</span>
+            </a>
+          </li>
+        </ul>
+      </li><!-- End Icons Nav -->
+
+      <li class="nav-heading">Pages</li>
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="users-profile.html">
+          <i class="bi bi-person"></i>
+          <span>统计信息</span>
+        </a>
+      </li><!-- End Profile Page Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="pages-faq.html">
+          <i class="bi bi-question-circle"></i>
+          <span>更多帮助</span>
+        </a>
+      </li><!-- End F.A.Q Page Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="pages-contact.html">
+          <i class="bi bi-envelope"></i>
+          <span>联系我们</span>
+        </a>
+      </li><!-- End Contact Page Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="pages-register.html">
+          <i class="bi bi-card-list"></i>
+          <span>后台管理</span>
+        </a>
+      </li><!-- End Register Page Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="pages-login.html">
+          <i class="bi bi-box-arrow-in-right"></i>
+          <span>登录问题</span>
+        </a>
+      </li><!-- End Login Page Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="pages-error-404.html">
+          <i class="bi bi-dash-circle"></i>
+          <span>Error 404</span>
+        </a>
+      </li><!-- End Error 404 Page Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="pages-blank.html">
+          <i class="bi bi-file-earmark"></i>
+          <span>Blank</span>
+        </a>
+      </li><!-- End Blank Page Nav -->
+
+    </ul>
+
+  </aside><!-- End Sidebar-->
+
+<main id="main" class="main">
+  <div class="pagetitle">
+    <h2 style="color: #3a5985">排课规则</h2>
+    <nav>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="index.html">首页</a></li>
+        <li class="breadcrumb-item">排课规则</li>
+        <li class="breadcrumb-item active" style="color: #3a5985">禁排设置</li>
+      </ol>
+    </nav>
+  </div><!-- End Page Title -->
+
+  <!-- 方案管理行 -->
+  <!--<div class="row mb-3">
+    <div class="col-md-4">
+      <div class="input-group input-group-sm">
+        <input type="text" class="form-control form-control-sm" placeholder="新方案名称">
+        <button class="btn btn-primary btn-sm" type="button">新建</button>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="input-group input-group-sm">
+        <input type="text" class="form-control form-control-sm" placeholder="搜索方案">
+        <button class="btn btn-outline-secondary btn-sm" type="button">
+          <i class="bi bi-search"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+-->
+ <div class="row g-3">
+    <!-- 排课模式设置 -->
+   <div class="col-md-6">
+    <div class="card h-100 rule-card">
+    <div class="card-header">
+      <i class="bi bi-calendar-x me-2"></i>学校维度禁排
+    </div>
+
+     <!-- <div class="mb-3">
+        <label class="form-label small fw-bold">连排类型</label>
+        <div class="row g-2">
+          <div class="col-6">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="twoConsecutive" checked>
+              <label class="form-check-label small" for="twoConsecutive">两节连排</label>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="fourConsecutive">
+              <label class="form-check-label small" for="fourConsecutive">四节连排</label>
+            </div>
+          </div>
+        </div>
+      </div>-->
+    <!-- 禁排时间范围 -->
+      <div class="card-body">
+    <div class="mb-3">
+      <label class="form-label small fw-bold">禁排时间范围</label>
+      <div class="row g-2">
+        <div class="col-6">
+          <input type="date" class="form-control form-control-sm" id="banStartDate">
+          <label class="form-text text-muted small">开始日期</label>
+        </div>
+        <div class="col-6">
+          <input type="date" class="form-control form-control-sm" id="banEndDate">
+          <label class="form-text text-muted small">结束日期</label>
+        </div>
+      </div>
+    </div>
+
+    <!-- 禁排类型设置 -->
+    <div class="mb-3">
+        <label class="form-label small fw-bold">禁排类型</label>
+        <div class="period-checkbox-group">
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="checkbox" id="holiday">
+            <label class="form-check-label small" for="holiday">法定节假日</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="checkbox" id="sports">
+            <label class="form-check-label small" for="sports">校运动会</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="checkbox" id="exam">
+            <label class="form-check-label small" for="exam">全校考试日</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="checkbox" id="event">
+            <label class="form-check-label small" for="event">重大活动日</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="checkbox" id="custom">
+            <label class="form-check-label small" for="custom">其他</label>
+          </div>
+        </div>
+      </div>
+
+    <!-- 自定义原因输入 -->
+    <div class="mb-3" id="customReason" style="display:none;">
+      <label class="form-label small fw-bold">自定义原因</label>
+      <input type="text" class="form-control form-control-sm"
+             placeholder="请输入禁排原因">
+    </div>
+
+    <!-- 周期重复设置 -->
+    <div class="mb-3">
+      <label class="form-label small fw-bold">周期设置</label>
+      <div class="period-checkbox-group">
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="checkbox" id="annualRepeat">
+          <label class="form-check-label small" for="annualRepeat">每年重复</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="checkbox" id="weeklyRepeat">
+          <label class="form-check-label small" for="weeklyRepeat">每周重复</label>
+        </div>
+      </div>
+    </div>
+
+    <!-- 关联规则设置 -->
+    <div class="mb-3">
+      <label class="form-label small fw-bold">关联规则</label>
+      <div class="period-checkbox-group">
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="checkbox" id="banClass">
+          <label class="form-check-label small" for="banClass">禁止排课</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="checkbox" id="banExam">
+          <label class="form-check-label small" for="banExam">禁止考试</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="checkbox" id="banActivity">
+          <label class="form-check-label small" for="banActivity">禁止活动</label>
+        </div>
+      </div>
+    </div>
+
+    <!-- 紧急程度设置 -->
+    <div class="mb-3">
+      <label class="form-label small fw-bold">紧急程度</label>
+      <div class="btn-group w-100" role="group">
+        <input type="radio" class="btn-check" name="urgency" id="urgentLow">
+        <label class="btn btn-outline-secondary btn-sm" for="urgentLow">普通</label>
+
+        <input type="radio" class="btn-check" name="urgency" id="urgentMedium">
+        <label class="btn btn-outline-warning btn-sm" for="urgentMedium">重要</label>
+
+        <input type="radio" class="btn-check" name="urgency" id="urgentHigh">
+        <label class="btn btn-outline-danger btn-sm" for="urgentHigh">紧急</label>
+      </div>
+    </div>
+  </div>
+    </div>
+</div>
+
+   <div class="col-md-6">
+  <div class="card h-100 rule-card">
+    <div class="card-header">
+      <i class="bi bi-building-exclamation me-2"></i>教室维度禁排
+    </div>
+    <div class="card-body">
+      <!-- 教室搜索栏 -->
+      <div class="mb-3">
+        <label class="form-label small fw-bold">教室搜索</label>
+        <div class="input-group">
+          <input type="text" class="form-control form-control-sm" placeholder="输入教室编号/名称搜索">
+          <span class="input-group-text bg-transparent border-start-0">
+            <i class="bi bi-search small"></i>
+          </span>
+        </div>
+      </div>
+
+      <!-- 禁排时间段 -->
+      <div class="mb-3">
+        <label class="form-label small fw-bold">禁排时间</label>
+        <div class="row g-2">
+          <div class="col-6">
+            <input type="date" class="form-control form-control-sm">
+            <span class="small text-muted">开始日期</span>
+          </div>
+          <div class="col-6">
+            <input type="date" class="form-control form-control-sm">
+            <span class="small text-muted">结束日期</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 教室类型限制 -->
+      <div class="mb-3">
+        <label class="form-label small fw-bold">教室类型</label>
+        <div class="period-checkbox-group1">
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="checkbox" id="peNoFoll">
+            <label class="form-check-label small" for="peAfternoon">普通教室</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="checkbox" id="peNoFollow">
+            <label class="form-check-label small" for="peNoFollow">实验室</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="checkbox" id="nightClass">
+            <label class="form-check-label small" for="nightClass">多媒体教室</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="checkbox" id="labNightOnly">
+            <label class="form-check-label small" for="labNightOnly">计算机房</label>
+          </div>
+
+        </div>
+      </div>
+
+
+
+      <!-- 特殊规则 -->
+      <div class="mb-3">
+        <label class="form-label small fw-bold">特殊规则</label>
+        <div class="period-checkbox-group">
+          <div class="row g-2">
+            <div class="col-6">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox">
+                <label class="form-check-label small">禁止跨楼层使用</label>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox">
+                <label class="form-check-label small">课后需清洁检查</label>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox">
+                <label class="form-check-label small">周末不开放</label>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox">
+                <label class="form-check-label small">仅限本专业使用</label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 禁排原因 -->
+      <div class="mb-3">
+        <label class="form-label small fw-bold">禁排原因</label>
+        <div class="period-checkbox-group3">
+
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="checkbox" id="1">
+            <label class="form-check-label small" for="peAfternoon">教室装修维护</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="checkbox" id="2">
+            <label class="form-check-label small" for="peNoFollow">设备升级改造</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="checkbox" id="3">
+            <label class="form-check-label small" for="nightClass">考试专用时段</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="checkbox" id="4">
+            <label class="form-check-label small" for="labNightOnly">其他特殊安排</label>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+   <!-- ======= 教师维度禁排设置 ======= -->
+<div class="col-md-6">
+  <div class="card h-100 rule-card">
+    <div class="card-header">
+      <i class="bi bi-person-x me-2"></i>教师维度禁排
+    </div>
+    <div class="card-body">
+      <!-- 教师搜索栏 -->
+      <div class="mb-3">
+        <label class="form-label small fw-bold">教师搜索</label>
+        <div class="input-group">
+          <input type="text" class="form-control form-control-sm" placeholder="输入教师姓名搜索">
+          <span class="input-group-text bg-transparent border-start-0">
+            <i class="bi bi-search small"></i>
+          </span>
+        </div>
+      </div>
+
+
+      <!-- 禁排时间段 -->
+      <div class="mb-3">
+        <label class="form-label small fw-bold">禁排时间</label>
+        <div class="row g-2">
+          <div class="col-6">
+            <input type="date" class="form-control form-control-sm">
+            <span class="small text-muted">开始日期</span>
+          </div>
+          <div class="col-6">
+            <input type="date" class="form-control form-control-sm">
+            <span class="small text-muted">结束日期</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 课程类型限制 -->
+
+
+      <!-- 场地要求 -->
+
+
+      <!-- 禁排原因 -->
+      <div class="mb-3">
+        <label class="form-label small fw-bold">禁排原因</label>
+        <div class="period-checkbox-group">
+          <div class="row g-2">
+            <div class="col-6">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox">
+                <label class="form-check-label small">教师个人时间安排（科研、出差等）</label>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox">
+                <label class="form-check-label small">教师健康或特殊需求（孕期、病假等）</label>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox">
+                <label class="form-check-label small">院系会议、学术活动</label>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox">
+                <label class="form-check-label small">教师承担多门课程，避免时间冲突</label>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox">
+                <label class="form-check-label small">同课程多名教师，需协调授课时间</label>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox">
+                <label class="form-check-label small">特定课程需要固定教师授课时间</label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 操作按钮 -->
+
+    </div>
+  </div>
+</div>
+
+
+
+
+     <div class="col-md-6">
+  <div class="card h-100 rule-card">
+    <div class="card-header">
+      <i class="bi bi-people me-2"></i>学生维度禁排
+    </div>
+    <div class="card-body">
+      <!-- 学生搜索栏 -->
+      <div class="mb-3">
+        <label class="form-label small fw-bold">学生搜索</label>
+        <div class="input-group">
+          <input type="text" class="form-control form-control-sm" placeholder="输入学生姓名/学号搜索">
+          <span class="input-group-text bg-transparent border-start-0">
+            <i class="bi bi-search small"></i>
+          </span>
+        </div>
+      </div>
+
+      <!-- 禁排时间段 -->
+      <div class="mb-3">
+        <label class="form-label small fw-bold">禁排时间</label>
+        <div class="row g-2">
+          <div class="col-6">
+            <input type="date" class="form-control form-control-sm">
+            <span class="small text-muted">开始日期</span>
+          </div>
+          <div class="col-6">
+            <input type="date" class="form-control form-control-sm">
+            <span class="small text-muted">结束日期</span>
+          </div>
+        </div>
+      </div>
+
+
+
+      <!-- 禁排原因 -->
+      <div class="mb-3">
+        <label class="form-label small fw-bold">禁排原因</label>
+        <div class="period-checkbox-group">
+          <div class="row g-2">
+            <div class="col-6">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox">
+                <label class="form-check-label small">学生社团/班级活动</label>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox">
+                <label class="form-check-label small">考试时间冲突</label>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox">
+                <label class="form-check-label small">校外实践/实习</label>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox">
+                <label class="form-check-label small">个人事务</label>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox">
+                <label class="form-check-label small">学生健康原因</label>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox">
+                <label class="form-check-label small">其他</label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 操作按钮 -->
+    </div>
+  </div>
+</div>
+
+
+     </div>
+
+
+  <!-- 操作按钮 -->
+  <div class="text-end mt-3">
+    <button class="btn btn-outline-secondary btn-sm me-2">
+      <i class="bi bi-arrow-counterclockwise"></i> 恢复默认
+    </button>
+    <button class="btn btn-success btn-sm me-2">
+      <i class="bi bi-save"></i> 保存
+    </button>
+    <button class="btn btn-primary btn-sm">
+      <i class="bi bi-gear"></i> 立即排课
+    </button>
+  </div>
+</main>
+
+
+  <!-- Vendor JS Files -->
+  <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <!-- Template Main JS File -->
+  <script src="../assets/js/main.js"></script>
+</body>
+
+</html>

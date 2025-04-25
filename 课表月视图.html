@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>排课表查询 - NiceAdmin Bootstrap Template</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- ElementUI 样式 -->
+  <link rel="stylesheet" href="https://unpkg.com/element-ui@2.15.14/lib/theme-chalk/index.css">
+
+  <!-- Favicons -->
+  <link href="../assets/img/favicon.png" rel="icon">
+  <link href="../assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.gstatic.com" rel="preconnect">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="../assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="../assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="../assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="../assets/vendor/quill/quill.snow.css" rel="stylesheet">
+  <link href="../assets/vendor/quill/quill.bubble.css" rel="stylesheet">
+  <link href="../assets/vendor/remixicon/remixicon.css" rel="stylesheet">
+  <link href="../assets/vendor/simple-datatables/style.css" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="../assets/css/style.css" rel="stylesheet">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 20px;
+    }
+
+    .calendar-container {
+      background-color: white;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      /*margin-left: 300px; !* 留出侧边栏的宽度 *!*/
+      /*width: calc(100% - 290px); !* 减去侧边栏宽度和边距 *!*/
+    }
+
+    .calendar-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .calendar-header select {
+      padding: 5px;
+      font-size: 16px;
+    }
+
+    .calendar-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 10px;
+    }
+
+    .calendar-day {
+      background-color: #fff;
+      border-radius: 5px;
+      padding: 10px;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+      min-height: 150px; /* 确保每个格子有足够的高度 */
+    }
+
+    .calendar-day-header {
+      font-size: 14px;
+      color: #888;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    .time-block {
+      background-color: #E4E4E4;
+      padding: 5px;
+      margin-bottom: 5px;
+      border-radius: 3px;
+      font-size: 12px;
+      text-align: center;
+    }
+
+    .time-block:nth-child(2) {
+      background-color: #d5deef;
+    }
+
+    .time-block:nth-child(3) {
+      background-color: #B2CAEE;
+    }
+
+    .time-block:nth-child(4) {
+      background-color: #89AFE0;
+    }
+
+    .time-block:nth-child(5) {
+      background-color: #3a5985
+    ;
+    }
+  </style>
+</head>
+
+
+
+<body>
+
+
+<!-- ======= Header 顶部部分======= -->
+  <header id="header" class="header fixed-top d-flex align-items-center">
+
+    <div class="d-flex align-items-center justify-content-between">
+      <a href="index.html" class="logo d-flex align-items-center">
+        <img src="assets/img/logo.png" alt="">
+        <span class="d-none d-lg-block">课境云枢排课系统</span>
+      </a>
+      <i class="bi bi-list toggle-sidebar-btn"></i>
+    </div><!-- End Logo -->
+
+    <div class="search-bar">
+      <form class="search-form d-flex align-items-center" method="POST" action="#">
+        <input type="text" name="query" placeholder="Search" title="Enter search keyword">
+        <button type="submit" title="Search"><i class="bi bi-search"></i></button>
+      </form>
+    </div><!-- End Search Bar -->
+
+    <nav class="header-nav ms-auto">
+      <ul class="d-flex align-items-center">
+
+        <li class="nav-item d-block d-lg-none">
+          <a class="nav-link nav-icon search-bar-toggle " href="#">
+            <i class="bi bi-search"></i>
+          </a>
+        </li><!-- End Search Icon-->
+
+        <li class="nav-item dropdown">
+
+          <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
+            <i class="bi bi-bell"></i>
+            <span class="badge bg-primary badge-number">4</span>
+          </a><!-- End Notification Icon -->
+
+          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
+            <li class="dropdown-header">
+              You have 4 new notifications
+              <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li class="notification-item">
+              <i class="bi bi-exclamation-circle text-warning"></i>
+              <div>
+                <h4>Lorem Ipsum</h4>
+                <p>Quae dolorem earum veritatis oditseno</p>
+                <p>30 min. ago</p>
+              </div>
+            </li>
+
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li class="notification-item">
+              <i class="bi bi-x-circle text-danger"></i>
+              <div>
+                <h4>Atque rerum nesciunt</h4>
+                <p>Quae dolorem earum veritatis oditseno</p>
+                <p>1 hr. ago</p>
+              </div>
+            </li>
+
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li class="notification-item">
+              <i class="bi bi-check-circle text-success"></i>
+              <div>
+                <h4>Sit rerum fuga</h4>
+                <p>Quae dolorem earum veritatis oditseno</p>
+                <p>2 hrs. ago</p>
+              </div>
+            </li>
+
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li class="notification-item">
+              <i class="bi bi-info-circle text-primary"></i>
+              <div>
+                <h4>Dicta reprehenderit</h4>
+                <p>Quae dolorem earum veritatis oditseno</p>
+                <p>4 hrs. ago</p>
+              </div>
+            </li>
+
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li class="dropdown-footer">
+              <a href="#">Show all notifications</a>
+            </li>
+
+          </ul><!-- End Notification Dropdown Items -->
+
+        </li><!-- End Notification Nav -->
+
+        <li class="nav-item dropdown">
+
+          <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
+            <i class="bi bi-chat-left-text"></i>
+            <span class="badge bg-success badge-number">3</span>
+          </a><!-- End Messages Icon -->
+
+          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages">
+            <li class="dropdown-header">
+              You have 3 new messages
+              <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li class="message-item">
+              <a href="#">
+                <img src="assets/img/messages-1.jpg" alt="" class="rounded-circle">
+                <div>
+                  <h4>Maria Hudson</h4>
+                  <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
+                  <p>4 hrs. ago</p>
+                </div>
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li class="message-item">
+              <a href="#">
+                <img src="assets/img/messages-2.jpg" alt="" class="rounded-circle">
+                <div>
+                  <h4>Anna Nelson</h4>
+                  <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
+                  <p>6 hrs. ago</p>
+                </div>
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li class="message-item">
+              <a href="#">
+                <img src="assets/img/messages-3.jpg" alt="" class="rounded-circle">
+                <div>
+                  <h4>David Muldon</h4>
+                  <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
+                  <p>8 hrs. ago</p>
+                </div>
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li class="dropdown-footer">
+              <a href="#">Show all messages</a>
+            </li>
+
+          </ul><!-- End Messages Dropdown Items -->
+
+        </li><!-- End Messages Nav -->
+
+        <li class="nav-item dropdown pe-3">
+
+          <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+            <img src="assets/img/profile-img.jpg" alt="Profile" class="rounded-circle">
+            <span class="d-none d-md-block dropdown-toggle ps-2">K. Anderson</span>
+          </a><!-- End Profile Iamge Icon -->
+
+          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
+            <li class="dropdown-header">
+              <h6>Kevin Anderson</h6>
+              <span>Web Designer</span>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li>
+              <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
+                <i class="bi bi-person"></i>
+                <span>My Profile</span>
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li>
+              <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
+                <i class="bi bi-gear"></i>
+                <span>Account Settings</span>
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li>
+              <a class="dropdown-item d-flex align-items-center" href="pages-faq.html">
+                <i class="bi bi-question-circle"></i>
+                <span>Need Help?</span>
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li>
+              <a class="dropdown-item d-flex align-items-center" href="#">
+                <i class="bi bi-box-arrow-right"></i>
+                <span>Sign Out</span>
+              </a>
+            </li>
+
+          </ul><!-- End Profile Dropdown Items -->
+        </li><!-- End Profile Nav -->
+
+      </ul>
+    </nav><!-- End Icons Navigation -->
+
+  </header><!-- End Header -->
+
+  <!-- ======= Sidebar侧边栏！！ ======= -->
+  <aside id="sidebar" class="sidebar">
+
+    <ul class="sidebar-nav" id="sidebar-nav">
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="index.html">
+          <i class="bi bi-grid"></i>
+          <span>首页</span>
+        </a>
+      </li><!-- End Dashboard Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-menu-button-wide"></i><span>基本数据</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+          <li>
+            <a href="基本数据-教室数据-yes引入elelment改进版本又改进版--已确定！.html">
+              <i class="bi bi-circle"></i><span>教室数据</span>
+            </a>
+          </li>
+          <li>
+            <a href="教师数据.html">
+              <i class="bi bi-circle"></i><span>教师信息</span>
+            </a>
+          </li>
+          <li>
+            <a href="components-badges.html">
+              <i class="bi bi-circle"></i><span>学生信息</span>
+            </a>
+          </li>
+          <li>
+            <a href="components-breadcrumbs.html">
+              <i class="bi bi-circle"></i><span>课程库</span>
+            </a>
+          </li>
+          <li>
+            <a href="components-buttons.html">
+              <i class="bi bi-circle"></i><span>专业数据</span>
+            </a>
+          </li>
+          <li>
+            <a href="components-cards.html">
+              <i class="bi bi-circle"></i><span>班级数据</span>
+            </a>
+          </li>
+          <li>
+            <a href="components-carousel.html">
+              <i class="bi bi-circle"></i><span>教学楼信息</span>
+            </a>
+          </li>
+          <li>
+            <a href="components-list-group.html">
+              <i class="bi bi-circle"></i><span>部门数据</span>
+            </a>
+          </li>
+          <li>
+            <a href="components-modal.html">
+              <i class="bi bi-circle"></i><span>专业方向</span>
+            </a>
+          </li>
+          <!--<li>
+            <a href="components-tabs.html">
+              <i class="bi bi-circle"></i><span>Tabs</span>
+            </a>
+          </li>
+          <li>
+            <a href="components-pagination.html">
+              <i class="bi bi-circle"></i><span>Pagination</span>
+            </a>
+          </li>
+          <li>
+            <a href="components-progress.html">
+              <i class="bi bi-circle"></i><span>Progress</span>
+            </a>
+          </li>
+          <li>
+            <a href="components-spinners.html">
+              <i class="bi bi-circle"></i><span>Spinners</span>
+            </a>
+          </li>-->
+         <!-- <li>
+            <a href="components-tooltips.html">
+              <i class="bi bi-circle"></i><span>Tooltips</span>
+            </a>
+          </li>-->
+        </ul>
+      </li><!-- End Components Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-journal-text"></i><span>智能排课</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+          <li>
+            <a href="forms-elements.html">
+              <i class="bi bi-circle"></i><span>Form Elements</span>
+            </a>
+          </li>
+          <li>
+            <a href="forms-layouts.html">
+              <i class="bi bi-circle"></i><span>Form Layouts</span>
+            </a>
+          </li>
+          <li>
+            <a href="forms-editors.html">
+              <i class="bi bi-circle"></i><span>Form Editors</span>
+            </a>
+          </li>
+          <li>
+            <a href="forms-validation.html">
+              <i class="bi bi-circle"></i><span>Form Validation</span>
+            </a>
+          </li>
+        </ul>
+      </li><!-- End Forms Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link " data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-layout-text-window-reverse"></i><span>组织管理</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="tables-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+          <li>
+            <a href="偏好设置3.html">
+              <i class="bi bi-circle"></i><span>偏好设置</span>
+            </a>
+          </li>
+          <li>
+            <a href="整个页面！！！！！！！组织管理 请假审批--已确定！.html" >
+              <i class="bi bi-circle"></i><span>请假审批</span>
+            </a>
+          </li>
+        </ul>
+      </li><!-- End Tables Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#charts-nav" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-bar-chart"></i><span>排课表查询</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="charts-nav" class="nav-content collapse show" data-bs-parent="#sidebar-nav">
+          <li>
+            <a href="尝试完整课表页面！！！课表查询-已确定！.html">
+              <i class="bi bi-circle" class="active"></i><span>班级课表查询</span>
+            </a>
+          </li>
+          <li>
+            <a href="charts-apexcharts.html">
+              <i class="bi bi-circle"></i><span>学生课表查询</span>
+            </a>
+          </li>
+          <li>
+            <a href="charts-echarts.html">
+              <i class="bi bi-circle"></i><span>教师课表查询</span>
+            </a>
+          </li>
+          <li>
+            <a href="嵌入了elementuizz的页面-课程添加已确定！.html">
+              <i class="bi bi-circle"></i><span>添加课程</span>
+            </a>
+          </li>
+        </ul>
+      </li><!-- End Charts Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#icons-nav" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-gem"></i><span>排课规则</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="icons-nav" class="nav-content collapse show " data-bs-parent="#sidebar-nav">
+          <li>
+            <a href="排课规则-排课方案设置-yes大幅度修改了一下的.html">
+              <i class="bi bi-circle"></i><span>排课方案设置</span>
+            </a>
+          </li>
+          <li>
+            <a href="排课规则-禁排设置-yes-禁排第五次-原因显示混乱但增加维度-暂时确定.html">
+              <i class="bi bi-circle"></i><span>禁排设置</span>
+            </a>
+          </li>
+        </ul>
+      </li><!-- End Icons Nav -->
+
+      <li class="nav-heading">Pages</li>
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="users-profile.html">
+          <i class="bi bi-person"></i>
+          <span>统计信息</span>
+        </a>
+      </li><!-- End Profile Page Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="pages-faq.html">
+          <i class="bi bi-question-circle"></i>
+          <span>更多帮助</span>
+        </a>
+      </li><!-- End F.A.Q Page Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="pages-contact.html">
+          <i class="bi bi-envelope"></i>
+          <span>联系我们</span>
+        </a>
+      </li><!-- End Contact Page Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="pages-register.html">
+          <i class="bi bi-card-list"></i>
+          <span>后台管理</span>
+        </a>
+      </li><!-- End Register Page Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="pages-login.html">
+          <i class="bi bi-box-arrow-in-right"></i>
+          <span>登录问题</span>
+        </a>
+      </li><!-- End Login Page Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="pages-error-404.html">
+          <i class="bi bi-dash-circle"></i>
+          <span>Error 404</span>
+        </a>
+      </li><!-- End Error 404 Page Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="pages-blank.html">
+          <i class="bi bi-file-earmark"></i>
+          <span>Blank</span>
+        </a>
+      </li><!-- End Blank Page Nav -->
+
+    </ul>
+
+  </aside><!-- End Sidebar-->
+
+<main id="main" class="main">
+
+    <div class="pagetitle">
+      <h1 style="color: #4f6dac">排课表查询</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="index.html">首页</a></li>
+          <li class="breadcrumb-item">排课表查询</li>
+          <li class="breadcrumb-item active">班级课表查询</li>
+        </ol>
+      </nav>
+    </div><!-- End Page Title -->
+
+
+
+  <div class="calendar-container">
+    <div class="calendar-header">
+      <select id="m-select">
+        <option value="r">日视图</option>
+        <option value="y">月视图</option>
+        <option value="q">学期视图</option>
+      </select>
+      <!--<h4>课表月视图</h4>-->
+      <select id="month-select">
+        <option value="0">2025年1月</option>
+        <option value="1">2025年2月</option>
+        <option value="2">2025年3月</option>
+        <option value="3">2025年4月</option>
+        <option value="4">2025年5月</option>
+        <option value="5">2025年6月</option>
+        <option value="6">2025年7月</option>
+        <option value="7">2025年8月</option>
+        <option value="8">2025年9月</option>
+        <option value="9">2025年10月</option>
+        <option value="10">2025年11月</option>
+        <option value="11">2025年12月</option>
+      </select>
+      <select id="classSelect">
+            <option value="24畜牧兽医2班">24畜牧兽医2班</option>
+<option value="24畜牧兽医1班">24畜牧兽医1班</option>
+<option value="24现代物流管理2班">24现代物流管理2班</option>
+<option value="24现代物流管理1班">24现代物流管理1班</option>
+<option value="24现代农业经济管理2班">24现代农业经济管理2班</option>
+<option value="24现代农业经济管理1班">24现代农业经济管理1班</option>
+<option value="24棉花加工与经营管理2班">24棉花加工与经营管理2班</option>
+<option value="24棉花加工与经营管理1班">24棉花加工与经营管理1班</option>
+<option value="23畜禽智能化养殖1班">23畜禽智能化养殖1班</option>
+<option value="23现代物流管理1班">23现代物流管理1班</option>
+<option value="23现代农业经济管理2班">23现代农业经济管理2班</option>
+<option value="23现代农业经济管理1班">23现代农业经济管理1班</option>
+<option value="23棉花加工与经营管理1班">23棉花加工与经营管理1班</option>
+<option value="22畜禽养殖1班">22畜禽养殖1班</option>
+<option value="22农业经济管理1班">22农业经济管理1班</option>
+<option value="21畜禽养殖1班">21畜禽养殖1班</option>
+<option value="21农业经济管理2班">21农业经济管理2班</option>
+<option value="21农业经济管理1班">21农业经济管理1班</option>
+          </select>
+    </div>
+    <div class="calendar-grid" id="calendar-grid">
+      <!-- 日历格子将通过JavaScript动态生成 -->
+    </div>
+  </div>
+
+  <script>
+    const courses = [
+      "顶岗实习", "植物生理学", "农业经营与管理", "作物栽培学",
+      "动物解剖生理", "动物药理学", "物流信息管理", "采购与供应链管理", "顶岗实习", "植物生理学", "农业经营与管理", "作物栽培学", "棉花加工", "棉花检验", "土壤肥料学", "机械制图",
+      "作物病虫害防治", "棉花检验实训", "跟岗实习", "毕业设计", "农学概论", "农业企业经营管理实务", "货币银行学",
+      "经济学基础", "经济法基础", "管理学基础", "农村政策法规", "基础会计", "出纳业务操作", "基础统计", "市场调查与预测",
+      "农业技术推广", "农产品市场营销", "会计电算化", "农产品物流管理与实务", "农产品电子商务", "成本核算", "市场调查",
+      "企业运营管理综合模拟实训", "农村社区管理", "农村新型经济组织管理", "农村金融与保险", "农村行政管理",
+      "乡村旅游开发与经营",
+      "动物解剖生理", "动物药理学", "动物营养与饲料", "动物微生物与免疫", "家畜环境控制", "动物病理学", "动物遗传育种",
+      "动物传染病与寄生虫病", "动物外科与产科", "牛羊病防治", "宠物疾病防治", "猪生产技术", "牛羊生产技术",
+      "动物防疫检疫技术",
+      "畜牧市场营销", "畜牧业机械化", "实验室诊断技术", "宠物饲养与疾病防治", "动物防疫与检疫技术", "兽医学概论",
+      "动物保护法律法规",
+      "动物遗传繁育", "家禽生产技术", "畜牧场规划与设计", "养殖企业经营管理", "动物繁殖技术", "畜牧学概论",
+      "经济动物饲养",
+      "畜产品加工技术", "养殖场环境控制与污物治理技术", "动物性食品卫生检验技术", "现代物流管理", "货物学", "市场营销",
+      "物流信息管理",
+      "采购与供应链管理", "智慧仓配运营", "智慧运输运营", "物流成本管理", "物流设施设备", "物流仿真沙盘实训",
+      "物流仿真综合实训",
+      "快递物流法规实务", "快递服务规范与礼仪", "揽投部团队建设", "数据分析实务"
+    ];
+
+    const timeSlots = [
+      "08:30 - 09:55",
+      "10:15 - 11:40",
+      "14:00 - 15:30",
+      "15:50 - 17:15",
+      "18:30 - 20:00"
+    ];
+
+    function getRandomCourses() {
+      const numCourses = Math.floor(Math.random() * 4) + 2; // 2-5个课程
+      const selectedCourses = [];
+      const selectedTimes = new Set();
+
+      while (selectedCourses.length < numCourses) {
+        const randomCourse = courses[Math.floor(Math.random() * courses.length)];
+        const randomTime = timeSlots[Math.floor(Math.random() * timeSlots.length)];
+
+        if (!selectedTimes.has(randomTime)) {
+          selectedTimes.add(randomTime);
+          selectedCourses.push({ course: randomCourse, time: randomTime });
+        }
+      }
+
+      return selectedCourses;
+    }
+
+    function generateCalendar(year, month) {
+      const calendarGrid = document.getElementById('calendar-grid');
+      calendarGrid.innerHTML = '';
+
+      const firstDay = new Date(year, month, 1);
+      const lastDay = new Date(year, month + 1, 0);
+      const startDay = firstDay.getDay() === 0 ? 6 : firstDay.getDay() - 1; // 周一为0，周日为6
+      const daysInMonth = lastDay.getDate();
+
+      // 生成星期标题
+      const weekdays = ['一', '二', '三', '四', '五', '六', '日'];
+      for (let i = 0; i < 7; i++) {
+        const dayHeader = document.createElement('div');
+        dayHeader.className = 'calendar-day-header';
+        dayHeader.textContent = weekdays[i];
+        calendarGrid.appendChild(dayHeader);
+      }
+
+      // 生成日期格子
+      for (let i = 0; i < 35; i++) {
+        const dayCell = document.createElement('div');
+        dayCell.className = 'calendar-day';
+
+        if (i >= startDay && i < startDay + daysInMonth) {
+          const day = i - startDay + 1;
+          dayCell.innerHTML = `<div class="calendar-day-header">${day}</div>`;
+
+          const courses = getRandomCourses();
+          courses.forEach(course => {
+            const timeBlock = document.createElement('div');
+            timeBlock.className = 'time-block';
+            timeBlock.textContent = `${course.course}\n${course.time}`;
+            dayCell.appendChild(timeBlock);
+          });
+        }
+
+        calendarGrid.appendChild(dayCell);
+      }
+    }
+
+    document.getElementById('month-select').addEventListener('change', (e) => {
+      const month = parseInt(e.target.value);
+      generateCalendar(2025, month);
+    });
+
+    // 初始化日历
+    generateCalendar(2025, 0);
+  </script>
+</main>
+
+</body>
+
+</html>

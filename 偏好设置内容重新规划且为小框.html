@@ -1,0 +1,1134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>组织管理 - 偏好设置</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="assets/css/style.css" rel="stylesheet">
+
+  <style>
+    .preference-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .preference-card {
+      background: white;
+      border-radius: 0.5rem;
+      box-shadow: 0 0.125rem 0.5rem rgba(58, 89, 133, 0.1);
+      overflow: hidden;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      border-top: 3px solid #89AFE0;
+    }
+
+    .preference-card .card-header {
+      background-color: #f8fafc;
+      border-bottom: 1px solid #e9ecef;
+      padding: 0.85rem 1.25rem;
+      font-weight: 600;
+      color: #3A5985;
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+    }
+
+    .preference-card .card-header i {
+      margin-right: 0.5rem;
+      font-size: 1.1rem;
+    }
+
+    .preference-card .card-body {
+      padding: 1.25rem;
+      flex: 1;
+    }
+
+    .form-group {
+      margin-bottom: 1.1rem;
+    }
+
+    .form-group label {
+      font-weight: 500;
+      margin-bottom: 0.4rem;
+      color: #495057;
+      font-size: 0.875rem;
+      display: block;
+    }
+
+    .form-control, .form-select {
+      border-radius: 0.25rem;
+      font-size: 0.875rem;
+      padding: 0.45rem 0.75rem;
+      border: 1px solid #ced4da;
+    }
+
+    .btn-primary {
+      background-color: #3A5985;
+      border-color: #3A5985;
+    }
+
+    .btn-primary:hover {
+      background-color: #2c4668;
+      border-color: #2c4668;
+    }
+
+    .time-range-group {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .time-range-group .form-control {
+      flex: 1;
+    }
+
+    .checkbox-group {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 0.9rem;
+    }
+
+    .form-check-input {
+      margin-top: 0;
+      width: 1.1em;
+      height: 1.1em;
+    }
+
+    .action-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-top: 2.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .action-buttons .btn {
+      min-width: 150px;
+      padding: 0.5rem 1rem;
+      font-weight: 500;
+    }
+
+    .badge-preference {
+      background-color: #e9f0f7;
+      color: #3A5985;
+      font-weight: 500;
+      padding: 0.35rem 0.65rem;
+      font-size: 0.75rem;
+      margin-left: 0.5rem;
+    }
+
+    .setting-description {
+      font-size: 0.8rem;
+      color: #6c757d;
+      margin-top: 0.3rem;
+    }
+
+    .multi-select-container {
+      border: 1px solid #ced4da;
+      border-radius: 0.25rem;
+      padding: 0.5rem;
+      max-height: 120px;
+      overflow-y: auto;
+    }
+
+    .multi-select-item {
+      padding: 0.25rem 0;
+    }
+
+    @media (max-width: 768px) {
+      .preference-container {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- ======= Header 顶部部分======= -->
+  <header id="header" class="header fixed-top d-flex align-items-center">
+
+    <div class="d-flex align-items-center justify-content-between">
+      <a href="index.html" class="logo d-flex align-items-center">
+        <img src="assets/img/logo.png" alt="">
+        <span class="d-none d-lg-block">课境云枢排课系统</span>
+      </a>
+      <i class="bi bi-list toggle-sidebar-btn"></i>
+    </div><!-- End Logo -->
+
+    <div class="search-bar">
+      <form class="search-form d-flex align-items-center" method="POST" action="#">
+        <input type="text" name="query" placeholder="Search" title="Enter search keyword">
+        <button type="submit" title="Search"><i class="bi bi-search"></i></button>
+      </form>
+    </div><!-- End Search Bar -->
+
+    <nav class="header-nav ms-auto">
+      <ul class="d-flex align-items-center">
+
+        <li class="nav-item d-block d-lg-none">
+          <a class="nav-link nav-icon search-bar-toggle " href="#">
+            <i class="bi bi-search"></i>
+          </a>
+        </li><!-- End Search Icon-->
+
+        <li class="nav-item dropdown">
+
+          <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
+            <i class="bi bi-bell"></i>
+            <span class="badge bg-primary badge-number">4</span>
+          </a><!-- End Notification Icon -->
+
+          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
+            <li class="dropdown-header">
+              You have 4 new notifications
+              <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li class="notification-item">
+              <i class="bi bi-exclamation-circle text-warning"></i>
+              <div>
+                <h4>Lorem Ipsum</h4>
+                <p>Quae dolorem earum veritatis oditseno</p>
+                <p>30 min. ago</p>
+              </div>
+            </li>
+
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li class="notification-item">
+              <i class="bi bi-x-circle text-danger"></i>
+              <div>
+                <h4>Atque rerum nesciunt</h4>
+                <p>Quae dolorem earum veritatis oditseno</p>
+                <p>1 hr. ago</p>
+              </div>
+            </li>
+
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li class="notification-item">
+              <i class="bi bi-check-circle text-success"></i>
+              <div>
+                <h4>Sit rerum fuga</h4>
+                <p>Quae dolorem earum veritatis oditseno</p>
+                <p>2 hrs. ago</p>
+              </div>
+            </li>
+
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li class="notification-item">
+              <i class="bi bi-info-circle text-primary"></i>
+              <div>
+                <h4>Dicta reprehenderit</h4>
+                <p>Quae dolorem earum veritatis oditseno</p>
+                <p>4 hrs. ago</p>
+              </div>
+            </li>
+
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li class="dropdown-footer">
+              <a href="#">Show all notifications</a>
+            </li>
+
+          </ul><!-- End Notification Dropdown Items -->
+
+        </li><!-- End Notification Nav -->
+
+        <li class="nav-item dropdown">
+
+          <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
+            <i class="bi bi-chat-left-text"></i>
+            <span class="badge bg-success badge-number">3</span>
+          </a><!-- End Messages Icon -->
+
+          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages">
+            <li class="dropdown-header">
+              You have 3 new messages
+              <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li class="message-item">
+              <a href="#">
+                <img src="assets/img/messages-1.jpg" alt="" class="rounded-circle">
+                <div>
+                  <h4>Maria Hudson</h4>
+                  <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
+                  <p>4 hrs. ago</p>
+                </div>
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li class="message-item">
+              <a href="#">
+                <img src="assets/img/messages-2.jpg" alt="" class="rounded-circle">
+                <div>
+                  <h4>Anna Nelson</h4>
+                  <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
+                  <p>6 hrs. ago</p>
+                </div>
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li class="message-item">
+              <a href="#">
+                <img src="assets/img/messages-3.jpg" alt="" class="rounded-circle">
+                <div>
+                  <h4>David Muldon</h4>
+                  <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
+                  <p>8 hrs. ago</p>
+                </div>
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li class="dropdown-footer">
+              <a href="#">Show all messages</a>
+            </li>
+
+          </ul><!-- End Messages Dropdown Items -->
+
+        </li><!-- End Messages Nav -->
+
+        <li class="nav-item dropdown pe-3">
+
+          <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+            <img src="assets/img/profile-img.jpg" alt="Profile" class="rounded-circle">
+            <span class="d-none d-md-block dropdown-toggle ps-2">K. Anderson</span>
+          </a><!-- End Profile Iamge Icon -->
+
+          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
+            <li class="dropdown-header">
+              <h6>Kevin Anderson</h6>
+              <span>Web Designer</span>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li>
+              <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
+                <i class="bi bi-person"></i>
+                <span>My Profile</span>
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li>
+              <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
+                <i class="bi bi-gear"></i>
+                <span>Account Settings</span>
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li>
+              <a class="dropdown-item d-flex align-items-center" href="pages-faq.html">
+                <i class="bi bi-question-circle"></i>
+                <span>Need Help?</span>
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li>
+              <a class="dropdown-item d-flex align-items-center" href="#">
+                <i class="bi bi-box-arrow-right"></i>
+                <span>Sign Out</span>
+              </a>
+            </li>
+
+          </ul><!-- End Profile Dropdown Items -->
+        </li><!-- End Profile Nav -->
+
+      </ul>
+    </nav><!-- End Icons Navigation -->
+
+  </header><!-- End Header -->
+
+  <!-- ======= Sidebar侧边栏！！ ======= -->
+  <aside id="sidebar" class="sidebar">
+
+    <ul class="sidebar-nav" id="sidebar-nav">
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="index.html">
+          <i class="bi bi-grid"></i>
+          <span>首页</span>
+        </a>
+      </li><!-- End Dashboard Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-menu-button-wide"></i><span>基本数据</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+          <li>
+            <a href="基本数据-教室数据-yes引入elelment改进版本又改进版--已确定！.html">
+              <i class="bi bi-circle"></i><span>教室数据</span>
+            </a>
+          </li>
+          <li>
+            <a href="教师数据.html">
+              <i class="bi bi-circle"></i><span>教师信息</span>
+            </a>
+          </li>
+          <li>
+            <a href="components-badges.html">
+              <i class="bi bi-circle"></i><span>学生信息</span>
+            </a>
+          </li>
+          <li>
+            <a href="课程库.html">
+              <i class="bi bi-circle"></i><span>课程库</span>
+            </a>
+          </li>
+          <li>
+            <a href="专业数据.html">
+              <i class="bi bi-circle"></i><span>专业数据</span>
+            </a>
+          </li>
+          <li>
+            <a href="班级数据.html">
+              <i class="bi bi-circle"></i><span>班级数据</span>
+            </a>
+          </li>
+          <li>
+            <a href="教学楼数据.html">
+              <i class="bi bi-circle"></i><span>教学楼信息</span>
+            </a>
+          </li>
+          <li>
+            <a href="部门数据.html">
+              <i class="bi bi-circle"></i><span>部门数据</span>
+            </a>
+          </li>
+          <li>
+            <a href="专业数据.html">
+              <i class="bi bi-circle"></i><span>专业方向</span>
+            </a>
+          </li>
+          <!--<li>
+            <a href="components-tabs.html">
+              <i class="bi bi-circle"></i><span>Tabs</span>
+            </a>
+          </li>
+          <li>
+            <a href="components-pagination.html">
+              <i class="bi bi-circle"></i><span>Pagination</span>
+            </a>
+          </li>
+          <li>
+            <a href="components-progress.html">
+              <i class="bi bi-circle"></i><span>Progress</span>
+            </a>
+          </li>
+          <li>
+            <a href="components-spinners.html">
+              <i class="bi bi-circle"></i><span>Spinners</span>
+            </a>
+          </li>-->
+         <!-- <li>
+            <a href="components-tooltips.html">
+              <i class="bi bi-circle"></i><span>Tooltips</span>
+            </a>
+          </li>-->
+        </ul>
+      </li><!-- End Components Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-journal-text"></i><span>智能排课</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+          <li>
+            <a href="forms-elements.html">
+              <i class="bi bi-circle"></i><span>Form Elements</span>
+            </a>
+          </li>
+          <li>
+            <a href="forms-layouts.html">
+              <i class="bi bi-circle"></i><span>Form Layouts</span>
+            </a>
+          </li>
+          <li>
+            <a href="forms-editors.html">
+              <i class="bi bi-circle"></i><span>Form Editors</span>
+            </a>
+          </li>
+          <li>
+            <a href="forms-validation.html">
+              <i class="bi bi-circle"></i><span>Form Validation</span>
+            </a>
+          </li>
+        </ul>
+      </li><!-- End Forms Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-layout-text-window-reverse"></i><span>组织管理</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="tables-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+          <li>
+            <a href="偏好设置3.html">
+              <i class="bi bi-circle"></i><span>偏好设置</span>
+            </a>
+          </li>
+          <li>
+            <a href="整个页面！！！！！！！组织管理 请假审批--已确定！.html" >
+              <i class="bi bi-circle"></i><span>请假审批</span>
+            </a>
+          </li>
+        </ul>
+      </li><!-- End Tables Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#charts-nav" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-bar-chart"></i><span>排课表查询</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="charts-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+          <li>
+            <a href="班级课表.html">
+              <i class="bi bi-circle"></i><span>班级课表查询</span>
+            </a>
+          </li>
+          <li>
+            <a href="charts-apexcharts.html">
+              <i class="bi bi-circle"></i><span>学生课表查询</span>
+            </a>
+          </li>
+          <li>
+            <a href="charts-echarts.html">
+              <i class="bi bi-circle"></i><span>教师课表查询</span>
+            </a>
+          </li>
+          <li>
+            <a href="嵌入了elementuizz的页面-课程添加已确定！.html">
+              <i class="bi bi-circle"></i><span>添加课程</span>
+            </a>
+          </li>
+        </ul>
+      </li><!-- End Charts Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#icons-nav" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-gem"></i><span>排课规则</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="icons-nav" class="nav-content collapse show " data-bs-parent="#sidebar-nav">
+          <li>
+            <a href="排课规则-排课方案设置-yes大幅度修改了一下的.html">
+              <i class="bi bi-circle"></i><span>排课方案设置</span>
+            </a>
+          </li>
+          <li>
+            <a href="排课规则-禁排设置-yes-禁排第五次-原因显示混乱但增加维度-暂时确定.html">
+              <i class="bi bi-circle"></i><span>禁排设置</span>
+            </a>
+          </li>
+        </ul>
+      </li><!-- End Icons Nav -->
+
+      <li class="nav-heading">Pages</li>
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="users-profile.html">
+          <i class="bi bi-person"></i>
+          <span>统计信息</span>
+        </a>
+      </li><!-- End Profile Page Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="pages-faq.html">
+          <i class="bi bi-question-circle"></i>
+          <span>更多帮助</span>
+        </a>
+      </li><!-- End F.A.Q Page Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="pages-contact.html">
+          <i class="bi bi-envelope"></i>
+          <span>联系我们</span>
+        </a>
+      </li><!-- End Contact Page Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="pages-register.html">
+          <i class="bi bi-card-list"></i>
+          <span>后台管理</span>
+        </a>
+      </li><!-- End Register Page Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="pages-login.html">
+          <i class="bi bi-box-arrow-in-right"></i>
+          <span>登录问题</span>
+        </a>
+      </li><!-- End Login Page Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="pages-error-404.html">
+          <i class="bi bi-dash-circle"></i>
+          <span>Error 404</span>
+        </a>
+      </li><!-- End Error 404 Page Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="pages-blank.html">
+          <i class="bi bi-file-earmark"></i>
+          <span>Blank</span>
+        </a>
+      </li><!-- End Blank Page Nav -->
+
+    </ul>
+
+  </aside><!-- End Sidebar-->
+
+  <main id="main" class="main">
+
+    <div class="pagetitle">
+      <h2 style="color: #3a5985">智能排课系统</h2>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="index.html">首页</a></li>
+          <li class="breadcrumb-item">系统设置</li>
+          <li class="breadcrumb-item active" style="color: #3a5985">排课偏好设置</li>
+        </ol>
+      </nav>
+    </div>
+
+    <section class="section">
+      <div class="container-fluid">
+
+        <!-- 第一行：核心排课规则 -->
+        <div class="preference-container">
+          <!-- 排课模式与策略 -->
+          <div class="preference-card">
+            <div class="card-header">
+              <i class="bi bi-gear"></i>排课模式与策略
+              <span class="badge badge-preference">核心</span>
+            </div>
+            <div class="card-body">
+              <div class="form-group">
+                <label>排课模式</label>
+                <select class="form-select">
+                  <option value="auto">智能自动排课</option>
+                  <option value="manual">手动排课模式</option>
+                  <option value="mixed">自动+手动混合模式</option>
+                </select>
+                <div class="setting-description">自动模式适用于初始排课，手动模式用于微调</div>
+              </div>
+
+              <div class="form-group">
+                <label>排课优先级策略</label>
+                <select class="form-select">
+                  <option value="student-first">学生院系优先</option>
+                  <option value="teacher-first">教师院系优先</option>
+                  <option value="course-type">课程性质优先</option>
+                  <option value="custom">自定义优先级...</option>
+                </select>
+              </div>
+
+              <div class="checkbox-group">
+                <input class="form-check-input" type="checkbox" id="enableConflictCheck" checked>
+                <label class="form-check-label" for="enableConflictCheck">启用实时冲突检测</label>
+              </div>
+
+              <div class="checkbox-group">
+                <input class="form-check-input" type="checkbox" id="enableOptimization" checked>
+                <label class="form-check-label" for="enableOptimization">启用智能优化</label>
+              </div>
+            </div>
+          </div>
+
+          <!-- 时间约束设置 -->
+          <div class="preference-card">
+            <div class="card-header">
+              <i class="bi bi-clock"></i>时间约束设置
+              <span class="badge badge-preference">核心</span>
+            </div>
+            <div class="card-body">
+              <div class="form-group">
+                <label>每日排课时段</label>
+                <div class="time-range-group">
+                  <input type="time" class="form-control" value="08:00">
+                  <span>至</span>
+                  <input type="time" class="form-control" value="21:00">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label>午休时间</label>
+                <div class="time-range-group">
+                  <input type="time" class="form-control" value="12:00">
+                  <span>至</span>
+                  <input type="time" class="form-control" value="13:30">
+                </div>
+              </div>
+
+              <div class="checkbox-group">
+                <input class="form-check-input" type="checkbox" id="enableEveningClass">
+                <label class="form-check-label" for="enableEveningClass">允许晚上排课</label>
+              </div>
+
+              <div class="form-group">
+                <label>每周排课天数</label>
+                <select class="form-select">
+                  <option value="5">周一至周五</option>
+                  <option value="6">周一至周六</option>
+                  <option value="7">周一至周日</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- 连排与学时设置 -->
+          <div class="preference-card">
+            <div class="card-header">
+              <i class="bi bi-list-task"></i>连排与学时设置
+              <span class="badge badge-preference">核心</span>
+            </div>
+            <div class="card-body">
+              <div class="form-group">
+                <label>理论课连排节次</label>
+                <select class="form-select">
+                  <option value="2">两节连排</option>
+                  <option value="4">四节连排</option>
+                  <option value="1">单节排课</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label>实验课连排节次</label>
+                <select class="form-select">
+                  <option value="2">两节连排</option>
+                  <option value="3">三节连排</option>
+                  <option value="4">四节连排</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label>周学时无法整除处理</label>
+                <select class="form-select">
+                  <option value="split">按单双周拆分</option>
+                  <option value="reduce">降低连排节次</option>
+                  <option value="remainder">剩余学时单独排</option>
+                </select>
+                <div class="setting-description">当周学时无法被连排节次整除时的处理方式</div>
+              </div>
+
+              <div class="checkbox-group">
+                <input class="form-check-input" type="checkbox" id="continuousTheoryLab" checked>
+                <label class="form-check-label" for="continuousTheoryLab">理论实验学时连续排</label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 第二行：教师相关设置 -->
+        <div class="preference-container">
+          <!-- 教师排课约束 -->
+          <div class="preference-card">
+            <div class="card-header">
+              <i class="bi bi-person"></i>教师排课约束
+              <span class="badge badge-preference">教师</span>
+            </div>
+            <div class="card-body">
+              <div class="form-group">
+                <label>每天最大排课节数</label>
+                <input type="number" class="form-control" min="1" max="8" value="4">
+              </div>
+
+              <div class="form-group">
+                <label>每周最大排课节数</label>
+                <input type="number" class="form-control" min="1" max="30" value="16">
+              </div>
+
+              <div class="form-group">
+                <label>上午最大节次</label>
+                <input type="number" class="form-control" min="1" max="4" value="2">
+              </div>
+
+              <div class="form-group">
+                <label>下午最大节次</label>
+                <input type="number" class="form-control" min="1" max="4" value="3">
+              </div>
+            </div>
+          </div>
+
+          <!-- 教师偏好设置 -->
+          <div class="preference-card">
+            <div class="card-header">
+              <i class="bi bi-heart"></i>教师偏好设置
+              <span class="badge badge-preference">教师</span>
+            </div>
+            <div class="card-body">
+              <div class="form-group">
+                <label>授课地点集中度</label>
+                <select class="form-select">
+                  <option value="high">高度集中（同一教学楼）</option>
+                  <option value="medium">中度集中（2-3个教学楼）</option>
+                  <option value="low">无特殊要求</option>
+                </select>
+              </div>
+
+              <div class="checkbox-group">
+                <input class="form-check-input" type="checkbox" id="teacherLocationPref" checked>
+                <label class="form-check-label" for="teacherLocationPref">优先教师办公室附近教室</label>
+              </div>
+
+              <div class="checkbox-group">
+                <input class="form-check-input" type="checkbox" id="continuousTeaching" checked>
+                <label class="form-check-label" for="continuousTeaching">允许连续授课</label>
+              </div>
+
+              <div class="form-group">
+                <label>连续授课最大节数</label>
+                <input type="number" class="form-control" min="1" max="4" value="2">
+              </div>
+            </div>
+          </div>
+
+          <!-- 特殊教师设置 -->
+          <div class="preference-card">
+            <div class="card-header">
+              <i class="bi bi-star"></i>特殊教师设置
+              <span class="badge badge-preference">教师</span>
+            </div>
+            <div class="card-body">
+              <div class="form-group">
+                <label>外教授课时间</label>
+                <select class="form-select">
+                  <option value="any">无限制</option>
+                  <option value="morning">仅上午</option>
+                  <option value="afternoon">仅下午</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label>体育课排课时间</label>
+                <select class="form-select">
+                  <option value="afternoon">仅下午</option>
+                  <option value="any">全天</option>
+                  <option value="morning">仅上午（不推荐）</option>
+                </select>
+              </div>
+
+              <div class="checkbox-group">
+                <input class="form-check-input" type="checkbox" id="noClassAfterPE">
+                <label class="form-check-label" for="noClassAfterPE">体育课后不排课</label>
+              </div>
+
+              <div class="checkbox-group">
+                <input class="form-check-input" type="checkbox" id="labAtNight">
+                <label class="form-check-label" for="labAtNight">实验课可安排在晚上</label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 第三行：教室与空间设置 -->
+        <div class="preference-container">
+          <!-- 教室分配规则 -->
+          <div class="preference-card">
+            <div class="card-header">
+              <i class="bi bi-building"></i>教室分配规则
+              <span class="badge badge-preference">空间</span>
+            </div>
+            <div class="card-body">
+              <div class="form-group">
+                <label>教室容量匹配规则</label>
+                <select class="form-select">
+                  <option value="strict">严格匹配（100-120%）</option>
+                  <option value="moderate">适度宽松（80-150%）</option>
+                  <option value="loose">宽松匹配（50-200%）</option>
+                </select>
+              </div>
+
+              <div class="checkbox-group">
+                <input class="form-check-input" type="checkbox" id="fixedClassroom" checked>
+                <label class="form-check-label" for="fixedClassroom">班级固定教室（合班课除外）</label>
+              </div>
+
+              <div class="checkbox-group">
+                <input class="form-check-input" type="checkbox" id="sameCourseSameRoom" checked>
+                <label class="form-check-label" for="sameCourseSameRoom">同一课程使用相同教室</label>
+              </div>
+
+              <div class="checkbox-group">
+                <input class="form-check-input" type="checkbox" id="classroomConcentration" checked>
+                <label class="form-check-label" for="classroomConcentration">班级排课教室尽量集中</label>
+              </div>
+            </div>
+          </div>
+
+          <!-- 教室类型偏好 -->
+          <div class="preference-card">
+            <div class="card-header">
+              <i class="bi bi-columns"></i>教室类型偏好
+              <span class="badge badge-preference">空间</span>
+            </div>
+            <div class="card-body">
+              <div class="form-group">
+                <label>理论课教室类型</label>
+                <select class="form-select">
+                  <option value="any">无特殊要求</option>
+                  <option value="multimedia">多媒体教室</option>
+                  <option value="standard">标准教室</option>
+                  <option value="large">大教室（100人以上）</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label>实验课教室类型</label>
+                <select class="form-select">
+                  <option value="lab">专业实验室</option>
+                  <option value="computer">计算机房</option>
+                  <option value="any">无特殊要求</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label>特殊课程教室</label>
+                <div class="multi-select-container">
+                  <div class="multi-select-item">
+                    <input type="checkbox" id="artRoom" class="form-check-input">
+                    <label for="artRoom" class="form-check-label">艺术类课程需要艺术教室</label>
+                  </div>
+                  <div class="multi-select-item">
+                    <input type="checkbox" id="musicRoom" class="form-check-input" checked>
+                    <label for="musicRoom" class="form-check-label">音乐课需要音乐教室</label>
+                  </div>
+                  <div class="multi-select-item">
+                    <input type="checkbox" id="peRoom" class="form-check-input" checked>
+                    <label for="peRoom" class="form-check-label">体育课需要运动场地</label>
+                  </div>
+                  <div class="multi-select-item">
+                    <input type="checkbox" id="meetingRoom" class="form-check-input">
+                    <label for="meetingRoom" class="form-check-label">研讨会需要会议室</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 教学楼分配 -->
+          <div class="preference-card">
+            <div class="card-header">
+              <i class="bi bi-map"></i>教学楼分配
+              <span class="badge badge-preference">空间</span>
+            </div>
+            <div class="card-body">
+              <div class="form-group">
+                <label>院系教学楼分配</label>
+                <select class="form-select">
+                  <option value="same">同一院系使用相同教学楼</option>
+                  <option value="near">相邻教学楼</option>
+                  <option value="any">无限制</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label>教学楼最大数量</label>
+                <input type="number" class="form-control" min="1" max="5" value="2">
+                <div class="setting-description">单个教师一周内授课使用的最大教学楼数量</div>
+              </div>
+
+              <div class="form-group">
+                <label>同一天教学楼限制</label>
+                <input type="number" class="form-control" min="1" max="3" value="1">
+                <div class="setting-description">单个教师同一天授课使用的最大教学楼数量</div>
+              </div>
+
+              <div class="checkbox-group">
+                <input class="form-check-input" type="checkbox" id="avoidCrossCampus" checked>
+                <label class="form-check-label" for="avoidCrossCampus">避免跨校区排课</label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 第四行：特殊课程与高级设置 -->
+        <div class="preference-container">
+          <!-- 特殊课程安排 -->
+          <div class="preference-card">
+            <div class="card-header">
+              <i class="bi bi-bookmark-star"></i>特殊课程安排
+              <span class="badge badge-preference">高级</span>
+            </div>
+            <div class="card-body">
+              <div class="form-group">
+                <label>特殊课程类型</label>
+                <div class="multi-select-container">
+                  <div class="multi-select-item">
+                    <input type="checkbox" id="bilingual" class="form-check-input" checked>
+                    <label for="bilingual" class="form-check-label">双语课程</label>
+                  </div>
+                  <div class="multi-select-item">
+                    <input type="checkbox" id="foreignTeacher" class="form-check-input" checked>
+                    <label for="foreignTeacher" class="form-check-label">外教授课</label>
+                  </div>
+                  <div class="multi-select-item">
+                    <input type="checkbox" id="crossDept" class="form-check-input" checked>
+                    <label for="crossDept" class="form-check-label">跨院系课程</label>
+                  </div>
+                  <div class="multi-select-item">
+                    <input type="checkbox" id="honorClass" class="form-check-input">
+                    <label for="honorClass" class="form-check-label">荣誉课程</label>
+                  </div>
+                </div>
+              </div>
+
+              <div class="checkbox-group">
+                <input class="form-check-input" type="checkbox" id="prioritySpecial" checked>
+                <label class="form-check-label" for="prioritySpecial">特殊课程优先安排</label>
+              </div>
+
+              <div class="form-group">
+                <label>特殊课程显示颜色</label>
+                <input type="color" class="form-control form-control-color" value="#FFD700" title="选择颜色">
+              </div>
+
+              <div class="checkbox-group">
+                <input class="form-check-input" type="checkbox" id="highlightSpecial" checked>
+                <label class="form-check-label" for="highlightSpecial">课表中高亮显示</label>
+              </div>
+            </div>
+          </div>
+
+          <!-- 合班与分组设置 -->
+          <div class="preference-card">
+            <div class="card-header">
+              <i class="bi bi-people-fill"></i>合班与分组设置
+              <span class="badge badge-preference">高级</span>
+            </div>
+            <div class="card-body">
+              <div class="form-group">
+                <label>理论课最大合班数</label>
+                <input type="number" class="form-control" min="1" max="6" value="3">
+              </div>
+
+              <div class="form-group">
+                <label>实验课最大合班数</label>
+                <input type="number" class="form-control" min="1" max="4" value="2">
+              </div>
+
+              <div class="form-group">
+                <label>合班规则</label>
+                <select class="form-select">
+                  <option value="sameMajor">同专业优先</option>
+                  <option value="sameGrade">同年级优先</option>
+                  <option value="any">无限制</option>
+                </select>
+              </div>
+
+              <div class="checkbox-group">
+                <input class="form-check-input" type="checkbox" id="avoidCrossMajor" checked>
+                <label class="form-check-label" for="avoidCrossMajor">避免跨大专业合班</label>
+              </div>
+            </div>
+          </div>
+
+          <!-- 高级排课规则 -->
+          <div class="preference-card">
+            <div class="card-header">
+              <i class="bi bi-sliders"></i>高级排课规则
+              <span class="badge badge-preference">高级</span>
+            </div>
+            <div class="card-body">
+              <div class="form-group">
+                <label>节假日自动调课</label>
+                <select class="form-select">
+                  <option value="auto">自动调整</option>
+                  <option value="manual">手动调整</option>
+                  <option value="cancel">取消当日课程</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label>冲突解决策略</label>
+                <select class="form-select">
+                  <option value="auto">自动优化解决</option>
+                  <option value="prompt">提示人工解决</option>
+                  <option value="ignore">仅记录不处理</option>
+                </select>
+              </div>
+
+              <div class="checkbox-group">
+                <input class="form-check-input" type="checkbox" id="balanceWorkload" checked>
+                <label class="form-check-label" for="balanceWorkload">均衡教师工作量</label>
+              </div>
+
+              <div class="checkbox-group">
+                <input class="form-check-input" type="checkbox" id="optimizeResource" checked>
+                <label class="form-check-label" for="optimizeResource">优化教室资源利用率</label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 操作按钮 -->
+        <div class="action-buttons">
+          <button class="btn btn-primary">
+            <i class="bi bi-save"></i> 保存所有设置
+          </button>
+          <button class="btn btn-outline-secondary">
+            <i class="bi bi-arrow-counterclockwise"></i> 恢复默认设置
+          </button>
+          <button class="btn btn-outline-primary">
+            <i class="bi bi-lightbulb"></i> 智能优化建议
+          </button>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Vendor JS Files -->
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <!-- Template Main JS File -->
+  <script src="assets/js/main.js"></script>
+</body>
+
+</html>

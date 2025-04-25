@@ -1,0 +1,1331 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>组织管理 - NiceAdmin Bootstrap Template</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- ElementUI 样式 -->
+  <link rel="stylesheet" href="https://unpkg.com/element-ui@2.15.14/lib/theme-chalk/index.css">
+
+  <!-- Favicons -->
+  <link href="assets/img/favicon.png" rel="icon">
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.gstatic.com" rel="preconnect">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="assets/vendor/quill/quill.snow.css" rel="stylesheet">
+  <link href="assets/vendor/quill/quill.bubble.css" rel="stylesheet">
+  <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">
+  <link href="assets/vendor/simple-datatables/style.css" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="assets/css/style.css" rel="stylesheet">
+
+
+<style>
+
+  .el-checkbox {
+    white-space: nowrap; /* 防止文本换行 */
+  }
+
+  .el-checkbox__label {
+    white-space: nowrap; /* 防止文本换行 */
+  }
+  /* 基础样式 */
+  .el-table {
+    margin: 20px 0;
+    font-family: 'Noto Sans SC', sans-serif;
+  }
+  .el-pagination {
+    margin-top: 20px;
+  }
+  .el-button--text {
+    padding: 0;
+  }
+
+  /* 按钮颜色 */
+  .el-button--primary {
+    background-color: #D5DEEF;
+    border-color: #D5DEEF;
+  }
+  .el-button--warning {
+    background-color: #ffefad;
+    border-color: #ffefad;
+  }
+
+  /* 表头样式 */
+  .el-table th > .cell {
+    color: #4f6dac;
+    font-size: 16px;
+  }
+
+  /* 表单布局 */
+  .el-form {
+    margin: 20px;
+    padding: 20px;
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+  }
+  .el-form-item {
+    margin-bottom: 20px;
+  }
+
+  /* 标题样式 */
+  .form-title {
+    font-size: 18px;
+    font-weight: bold;
+    color: #3a5985;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #89afe0;
+  }
+
+  /* 标签间距 */
+  .el-form-item__label {
+    margin-bottom: 10px;
+  }
+
+  /* 下拉菜单 */
+  .el-select-dropdown {
+    z-index: 9999 !important;
+  }
+  .el-select-dropdown__item.selected {
+    color: #89afe0;
+  }
+  .venue-select .el-select-dropdown__item {
+    height: auto;
+    padding: 8px 20px;
+    line-height: 1.5;
+  }
+  .el-select-dropdown__item span {
+    white-space: normal !important;
+  }
+
+  /* 禁排原因特殊样式 */
+  .reason-form-item .el-form-item__content {
+    margin-left: 120px !important;
+    width: calc(100% - 120px);
+  }
+  .reason-content-wrapper {
+    width: 100%;
+    margin-top: -8px;
+  }
+  .first-line {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 12px;
+  }
+  .long-option {
+    flex: 1;
+    min-width: 280px;
+  }
+  .el-checkbox {
+    display: inline-flex !important;
+    align-items: flex-start;
+    margin-right: 15px !important;
+    height: auto !important;
+  }
+  .el-checkbox__label {
+    white-space: normal !important;
+    word-break: break-word;
+    line-height: 1.5;
+    padding-left: 8px;
+    width: calc(100% - 20px);
+  }
+
+  /* 栅格系统修正 */
+  .el-col {
+    display: flex !important;
+    align-items: center;
+    padding: 0 5px !important;
+  }
+  .el-row {
+    margin: 0 -5px !important;
+  }
+
+  /* 其他元素 */
+  .el-form-item__content {
+    line-height: normal;
+  }
+</style>
+
+
+</head>
+
+<body>
+<!-- ======= Header 顶部部分======= -->
+  <header id="header" class="header fixed-top d-flex align-items-center">
+
+    <div class="d-flex align-items-center justify-content-between">
+      <a href="index.html" class="logo d-flex align-items-center">
+        <img src="assets/img/logo.png" alt="">
+        <span class="d-none d-lg-block">课境云枢排课系统</span>
+      </a>
+      <i class="bi bi-list toggle-sidebar-btn"></i>
+    </div><!-- End Logo -->
+
+    <div class="search-bar">
+      <form class="search-form d-flex align-items-center" method="POST" action="#">
+        <input type="text" name="query" placeholder="Search" title="Enter search keyword">
+        <button type="submit" title="Search"><i class="bi bi-search"></i></button>
+      </form>
+    </div><!-- End Search Bar -->
+
+    <nav class="header-nav ms-auto">
+      <ul class="d-flex align-items-center">
+
+        <li class="nav-item d-block d-lg-none">
+          <a class="nav-link nav-icon search-bar-toggle " href="#">
+            <i class="bi bi-search"></i>
+          </a>
+        </li><!-- End Search Icon-->
+
+        <li class="nav-item dropdown">
+
+          <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
+            <i class="bi bi-bell"></i>
+            <span class="badge bg-primary badge-number">4</span>
+          </a><!-- End Notification Icon -->
+
+          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
+            <li class="dropdown-header">
+              You have 4 new notifications
+              <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li class="notification-item">
+              <i class="bi bi-exclamation-circle text-warning"></i>
+              <div>
+                <h4>Lorem Ipsum</h4>
+                <p>Quae dolorem earum veritatis oditseno</p>
+                <p>30 min. ago</p>
+              </div>
+            </li>
+
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li class="notification-item">
+              <i class="bi bi-x-circle text-danger"></i>
+              <div>
+                <h4>Atque rerum nesciunt</h4>
+                <p>Quae dolorem earum veritatis oditseno</p>
+                <p>1 hr. ago</p>
+              </div>
+            </li>
+
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li class="notification-item">
+              <i class="bi bi-check-circle text-success"></i>
+              <div>
+                <h4>Sit rerum fuga</h4>
+                <p>Quae dolorem earum veritatis oditseno</p>
+                <p>2 hrs. ago</p>
+              </div>
+            </li>
+
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li class="notification-item">
+              <i class="bi bi-info-circle text-primary"></i>
+              <div>
+                <h4>Dicta reprehenderit</h4>
+                <p>Quae dolorem earum veritatis oditseno</p>
+                <p>4 hrs. ago</p>
+              </div>
+            </li>
+
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li class="dropdown-footer">
+              <a href="#">Show all notifications</a>
+            </li>
+
+          </ul><!-- End Notification Dropdown Items -->
+
+        </li><!-- End Notification Nav -->
+
+        <li class="nav-item dropdown">
+
+          <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
+            <i class="bi bi-chat-left-text"></i>
+            <span class="badge bg-success badge-number">3</span>
+          </a><!-- End Messages Icon -->
+
+          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages">
+            <li class="dropdown-header">
+              You have 3 new messages
+              <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li class="message-item">
+              <a href="#">
+                <img src="assets/img/messages-1.jpg" alt="" class="rounded-circle">
+                <div>
+                  <h4>Maria Hudson</h4>
+                  <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
+                  <p>4 hrs. ago</p>
+                </div>
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li class="message-item">
+              <a href="#">
+                <img src="assets/img/messages-2.jpg" alt="" class="rounded-circle">
+                <div>
+                  <h4>Anna Nelson</h4>
+                  <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
+                  <p>6 hrs. ago</p>
+                </div>
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li class="message-item">
+              <a href="#">
+                <img src="assets/img/messages-3.jpg" alt="" class="rounded-circle">
+                <div>
+                  <h4>David Muldon</h4>
+                  <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
+                  <p>8 hrs. ago</p>
+                </div>
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li class="dropdown-footer">
+              <a href="#">Show all messages</a>
+            </li>
+
+          </ul><!-- End Messages Dropdown Items -->
+
+        </li><!-- End Messages Nav -->
+
+        <li class="nav-item dropdown pe-3">
+
+          <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+            <img src="assets/img/profile-img.jpg" alt="Profile" class="rounded-circle">
+            <span class="d-none d-md-block dropdown-toggle ps-2">K. Anderson</span>
+          </a><!-- End Profile Iamge Icon -->
+
+          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
+            <li class="dropdown-header">
+              <h6>Kevin Anderson</h6>
+              <span>Web Designer</span>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li>
+              <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
+                <i class="bi bi-person"></i>
+                <span>My Profile</span>
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li>
+              <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
+                <i class="bi bi-gear"></i>
+                <span>Account Settings</span>
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li>
+              <a class="dropdown-item d-flex align-items-center" href="pages-faq.html">
+                <i class="bi bi-question-circle"></i>
+                <span>Need Help?</span>
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li>
+              <a class="dropdown-item d-flex align-items-center" href="#">
+                <i class="bi bi-box-arrow-right"></i>
+                <span>Sign Out</span>
+              </a>
+            </li>
+
+          </ul><!-- End Profile Dropdown Items -->
+        </li><!-- End Profile Nav -->
+
+      </ul>
+    </nav><!-- End Icons Navigation -->
+
+  </header><!-- End Header -->
+
+  <!-- ======= Sidebar侧边栏！！ ======= -->
+  <aside id="sidebar" class="sidebar">
+
+    <ul class="sidebar-nav" id="sidebar-nav">
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="index.html">
+          <i class="bi bi-grid"></i>
+          <span>首页</span>
+        </a>
+      </li><!-- End Dashboard Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-menu-button-wide"></i><span>基本数据</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+          <li>
+            <a href="基本数据-教室数据-yes引入elelment改进版本又改进版--已确定！.html">
+              <i class="bi bi-circle"></i><span>教室数据</span>
+            </a>
+          </li>
+          <li>
+            <a href="教师数据.html">
+              <i class="bi bi-circle"></i><span>教师信息</span>
+            </a>
+          </li>
+          <li>
+            <a href="components-badges.html">
+              <i class="bi bi-circle"></i><span>学生信息</span>
+            </a>
+          </li>
+          <li>
+            <a href="课程库.html">
+              <i class="bi bi-circle"></i><span>课程库</span>
+            </a>
+          </li>
+          <li>
+            <a href="专业数据.html">
+              <i class="bi bi-circle"></i><span>专业数据</span>
+            </a>
+          </li>
+          <li>
+            <a href="班级数据.html">
+              <i class="bi bi-circle"></i><span>班级数据</span>
+            </a>
+          </li>
+          <li>
+            <a href="教学楼数据.html">
+              <i class="bi bi-circle"></i><span>教学楼信息</span>
+            </a>
+          </li>
+          <li>
+            <a href="部门数据.html">
+              <i class="bi bi-circle"></i><span>部门数据</span>
+            </a>
+          </li>
+          <li>
+            <a href="专业数据.html">
+              <i class="bi bi-circle"></i><span>专业方向</span>
+            </a>
+          </li>
+          <!--<li>
+            <a href="components-tabs.html">
+              <i class="bi bi-circle"></i><span>Tabs</span>
+            </a>
+          </li>
+          <li>
+            <a href="components-pagination.html">
+              <i class="bi bi-circle"></i><span>Pagination</span>
+            </a>
+          </li>
+          <li>
+            <a href="components-progress.html">
+              <i class="bi bi-circle"></i><span>Progress</span>
+            </a>
+          </li>
+          <li>
+            <a href="components-spinners.html">
+              <i class="bi bi-circle"></i><span>Spinners</span>
+            </a>
+          </li>-->
+         <!-- <li>
+            <a href="components-tooltips.html">
+              <i class="bi bi-circle"></i><span>Tooltips</span>
+            </a>
+          </li>-->
+        </ul>
+      </li><!-- End Components Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-journal-text"></i><span>智能排课</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+          <li>
+            <a href="forms-elements.html">
+              <i class="bi bi-circle"></i><span>Form Elements</span>
+            </a>
+          </li>
+          <li>
+            <a href="forms-layouts.html">
+              <i class="bi bi-circle"></i><span>Form Layouts</span>
+            </a>
+          </li>
+          <li>
+            <a href="forms-editors.html">
+              <i class="bi bi-circle"></i><span>Form Editors</span>
+            </a>
+          </li>
+          <li>
+            <a href="forms-validation.html">
+              <i class="bi bi-circle"></i><span>Form Validation</span>
+            </a>
+          </li>
+        </ul>
+      </li><!-- End Forms Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-layout-text-window-reverse"></i><span>组织管理</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="tables-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+          <li>
+            <a href="偏好设置3.html">
+              <i class="bi bi-circle"></i><span>偏好设置</span>
+            </a>
+          </li>
+          <li>
+            <a href="整个页面！！！！！！！组织管理 请假审批--已确定！.html" >
+              <i class="bi bi-circle"></i><span>请假审批</span>
+            </a>
+          </li>
+        </ul>
+      </li><!-- End Tables Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#charts-nav" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-bar-chart"></i><span>排课表查询</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="charts-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+          <li>
+            <a href="班级课表.html">
+              <i class="bi bi-circle"></i><span>班级课表查询</span>
+            </a>
+          </li>
+          <li>
+            <a href="charts-apexcharts.html">
+              <i class="bi bi-circle"></i><span>学生课表查询</span>
+            </a>
+          </li>
+          <li>
+            <a href="charts-echarts.html">
+              <i class="bi bi-circle"></i><span>教师课表查询</span>
+            </a>
+          </li>
+          <li>
+            <a href="嵌入了elementuizz的页面-课程添加已确定！.html">
+              <i class="bi bi-circle"></i><span>添加课程</span>
+            </a>
+          </li>
+        </ul>
+      </li><!-- End Charts Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link" data-bs-target="#icons-nav" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-gem"></i><span>排课规则</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="icons-nav" class="nav-content collapse show " data-bs-parent="#sidebar-nav">
+          <li>
+            <a href="排课规则-排课方案设置-yes大幅度修改了一下的.html">
+              <i class="bi bi-circle"></i><span>排课方案设置</span>
+            </a>
+          </li>
+          <li>
+            <a href="排课规则-禁排设置-yes-禁排第五次-原因显示混乱但增加维度-暂时确定.html">
+              <i class="bi bi-circle active"></i><span>禁排设置</span>
+            </a>
+          </li>
+        </ul>
+      </li><!-- End Icons Nav -->
+
+      <li class="nav-heading">Pages</li>
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="users-profile.html">
+          <i class="bi bi-person"></i>
+          <span>统计信息</span>
+        </a>
+      </li><!-- End Profile Page Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="pages-faq.html">
+          <i class="bi bi-question-circle"></i>
+          <span>更多帮助</span>
+        </a>
+      </li><!-- End F.A.Q Page Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="pages-contact.html">
+          <i class="bi bi-envelope"></i>
+          <span>联系我们</span>
+        </a>
+      </li><!-- End Contact Page Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="pages-register.html">
+          <i class="bi bi-card-list"></i>
+          <span>后台管理</span>
+        </a>
+      </li><!-- End Register Page Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="pages-login.html">
+          <i class="bi bi-box-arrow-in-right"></i>
+          <span>登录问题</span>
+        </a>
+      </li><!-- End Login Page Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="pages-error-404.html">
+          <i class="bi bi-dash-circle"></i>
+          <span>Error 404</span>
+        </a>
+      </li><!-- End Error 404 Page Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="pages-blank.html">
+          <i class="bi bi-file-earmark"></i>
+          <span>Blank</span>
+        </a>
+      </li><!-- End Blank Page Nav -->
+
+    </ul>
+
+  </aside><!-- End Sidebar-->
+
+
+  <main id="main" class="main">
+    <div class="pagetitle">
+      <h2 style="color: #3a5985;font-weight: 300">排课规则</h2>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="index.html">首页</a></li>
+          <li class="breadcrumb-item">排课规则</li>
+          <li class="breadcrumb-item active" style="color: #3a5985">排课方案设置</li>
+        </ol>
+      </nav>
+    </div>
+
+    <div id="app">
+      <!-- 禁排设置表单 -->
+      <el-form :model="form" :rules="rules" ref="ruleFormRef" label-width="120px">
+        <!-- 规则名称输入框 -->
+        <div class="form-title">学校维度禁排设置</div>
+        <el-form-item label="规则名称" prop="ruleName">
+          <el-input
+            v-model="form.ruleName"
+            placeholder="请输入规则名称（最多20字）"
+          />
+        </el-form-item>
+
+        <!-- 时间范围选择器 -->
+        <el-form-item label="时间范围" prop="dateRange">
+          <el-date-picker
+            v-model="form.dateRange"
+            type="daterange"
+            range-separator="至"
+            start-placeholder="开始日期"
+            end-placeholder="结束日期"
+          />
+        </el-form-item>
+
+        <!-- 循环周期复选框组 -->
+        <el-form-item label="循环周期">
+          <el-checkbox-group v-model="form.cycleMode">
+            <el-checkbox label="年周期生效" />
+            <el-checkbox label="单次生效" />
+          </el-checkbox-group>
+        </el-form-item>
+
+        <!-- 禁排类型下拉框 -->
+        <el-form-item label="禁排类型" prop="blockType">
+          <el-select v-model="form.blockType" placeholder="请选择禁排类型">
+            <el-option label="法定假日" value="holiday" />
+            <el-option label="校庆日" value="school_anniversary" />
+            <el-option label="体育赛事" value="sports_event" />
+            <el-option label="考试周" value="exam_week" />
+            <el-option label="临时活动" value="temporary_event" />
+          </el-select>
+        </el-form-item>
+        <!-- 紧急程度标签 -->
+        <el-form-item label="紧急程度">
+          <el-radio-group v-model="form.urgencyLevel">
+            <el-radio label="常规">
+              <el-tag type="info">常规</el-tag>
+             </el-radio>
+           <el-radio label="紧急"><div class="card h-100 rule-card">
+    <div class="card-header">
+      <i class="bi bi-building me-2"></i>教室设置
+    </div>
+    <div class="card-body">
+          <el-tag type="warning">紧急</el-tag>
+          </el-radio>
+            <el-radio label="特级">
+              <el-tag type="danger">特级</el-tag>
+            </el-radio>
+          </el-radio-group>
+        </el-form-item>
+        <!-- 冲突检测机制 -->
+        <el-form-item label="冲突检测">
+          <el-button type="primary" @click="checkConflict">检测冲突</el-button>
+          <el-dialog v-model="conflictDialog" title="冲突检测">
+            <p v-if="conflictDates.length">
+              冲突日期：{{ conflictDates.join(", ") }}
+            </p>
+            <p v-else>无冲突</p>
+            <el-button type="danger" @click="resolveConflict">覆盖冲突</el-button>
+            <el-button @click="conflictDialog = false">取消</el-button>
+          </el-dialog>
+        </el-form-item>
+
+        <el-form-item>
+          <el-button type="primary" @click="submitForm">提交</el-button>
+        </el-form-item>
+      </el-form>
+
+      <!-- 教师维度禁排表单 -->
+      <el-form :model="teacherForm" :rules="teacherRules" ref="teacherFormRef" label-width="120px">
+        <div class="form-title">教师维度禁排</div>
+
+        <!-- 教师搜索栏 -->
+        <el-form-item label="教师搜索" prop="teachers">
+          <el-select
+            v-model="teacherForm.teachers"
+            multiple
+            filterable
+            placeholder="请输入教师姓名搜索"
+            suffix-icon="el-icon-search"
+          >
+            <el-option
+              v-for="teacher in filteredTeachers"
+              :key="teacher.value"
+              :label="teacher.label"
+              :value="teacher.value"
+            />
+          </el-select>
+        </el-form-item>
+
+        <!-- 课程搜索栏 -->
+        <el-form-item label="课程搜索" prop="courses">
+          <el-select
+            v-model="teacherForm.courses"
+            multiple
+            filterable
+            placeholder="请输入课程名称搜索"
+            suffix-icon="el-icon-search"
+          >
+            <el-option
+              v-for="course in filteredCourses"
+              :key="course.value"
+              :label="course.label"
+              :value="course.value"
+            />
+          </el-select>
+        </el-form-item>
+
+        <!-- 禁排时间段 -->
+        <el-form-item label="禁排时间" prop="dateRange">
+          <el-date-picker
+            v-model="teacherForm.dateRange"
+            type="daterange"
+            range-separator="至"
+            start-placeholder="开始日期"
+            end-placeholder="结束日期"
+          />
+          <el-time-picker
+            v-model="teacherForm.timeRange"
+            is-range
+            range-separator="至"
+            start-placeholder="开始时间"
+            end-placeholder="结束时间"
+          />
+        </el-form-item>
+
+        <!-- 课程类型限制 -->
+        <el-form-item label="课程类型" prop="courseType">
+          <el-select
+         v-model="teacherForm.courseType"
+        placeholder="请选择课程类型"
+         style="width: 100%"> <!-- 修改为100%宽度 -->
+          <el-option label="理论课" value="theory" />
+           <el-option label="实验课" value="lab" />
+            <el-option label="实践课" value="practice" />
+            <el-option label="体育课" value="sports" />
+          <el-option label="研讨课" value="seminar" />
+          </el-select>
+          </el-form-item>
+        <!-- 场地要求 -->
+        <el-form-item label="场地要求" prop="venueType">
+          <el-select
+             v-model="teacherForm.venueType"
+             placeholder="请选择场地类型"
+    style="width:20%"
+    popper-class="venue-select"
+  >
+    <el-option label="普通教室" value="classroom" />
+    <el-option label="实验室" value="lab" />
+    <el-option label="多媒体教室" value="multimedia" />
+    <el-option label="阶梯教室" value="lecture_hall" />
+    <el-option label="语音教室" value="language_lab" />
+    <el-option label="舞蹈教室" value="dance_room" />
+  </el-select>
+</el-form-item>
+
+
+        <!-- 集中排课需求 -->
+        <el-form-item label="集中排课" prop="blockScheduling">
+          <el-checkbox v-model="teacherForm.blockScheduling">需要集中排课</el-checkbox>
+        </el-form-item>
+
+        <!-- 禁排原因 -->
+        <el-form-item label="禁排原因" prop="reason">
+  <el-checkbox-group v-model="teacherForm.reason" class="reason-group">
+    <!-- 调整标题间距 -->
+    <div style="margin-bottom: 12px"></div>
+
+    <!-- 首行优化 -->
+    <el-row :gutter="10">  <!-- 减小gutter值 -->
+      <el-col :span="12">  <!-- 12+12=24 -->
+        <el-checkbox label="教师个人时间安排（科研、出差等）" />
+      </el-col>
+      <el-col :span="12">
+        <el-checkbox label="教师健康或特殊需求（孕期、病假等）" />
+      </el-col>
+    </el-row>
+
+    <!-- 标准三列布局 -->
+    <el-row :gutter="10" style="margin-top: 8px">
+      <el-col :span="8">
+        <el-checkbox label="院系会议、学术活动" />
+      </el-col>
+      <el-col :span="8">
+        <el-checkbox label="教师承担多门课程，避免时间冲突" />
+      </el-col>
+      <el-col :span="8">
+        <el-checkbox label="同课程多名教师，需协调授课时间" />
+      </el-col>
+    </el-row>
+
+    <!-- 尾行优化 -->
+    <el-row :gutter="10" style="margin-top: 8px">
+      <el-col :span="12">
+        <el-checkbox label="特定课程需要固定教师授课时间" />
+      </el-col>
+      <el-col :span="12">
+        <el-checkbox label="其他" />
+      </el-col>
+    </el-row>
+  </el-checkbox-group>
+</el-form-item>
+
+
+
+        <!-- 优先级设置 -->
+        <el-form-item label="优先级" prop="priority">
+          <el-select v-model="teacherForm.priority" placeholder="请选择优先级">
+            <el-option label="高" value="high" />
+            <el-option label="中" value="medium" />
+            <el-option label="低" value="low" />
+          </el-select>
+        </el-form-item>
+
+        <el-form-item>
+          <el-button type="primary" @click="submitTeacherForm">提交</el-button>
+        </el-form-item>
+      </el-form>
+
+      <el-form :model="classroomForm" :rules="classroomRules" ref="classroomFormRef" label-width="120px">
+        <div class="form-title">教室维度禁排</div>
+        <!-- 教室选择 -->
+        <el-form-item label="教室选择" prop="classrooms">
+        <el-select
+          v-model="classroomForm.classrooms"
+          multiple
+          filterable
+          placeholder="请输入教室编号/名称"
+          style="width: 100%"
+        >
+          <el-option
+            v-for="room in filteredClassrooms"
+            :key="room.value"
+            :label="room.label"
+            :value="room.value"
+          />
+        </el-select>
+      </el-form-item>
+
+      <!-- 时间范围选择 -->
+      <el-form-item label="禁排时间" prop="dateRange">
+        <el-date-picker
+          v-model="classroomForm.dateRange"
+          type="daterange"
+          range-separator="至"
+          start-placeholder="开始日期"
+          end-placeholder="结束日期"
+          value-format="yyyy-MM-dd"
+          style="width: 100%"
+        />
+        <el-time-picker
+          v-model="classroomForm.timeRange"
+          is-range
+          range-separator="至"
+          start-placeholder="开始时间"
+          end-placeholder="结束时间"
+          format="HH:mm"
+          value-format="HH:mm"
+          style="margin-top: 10px;width: 100%"
+        />
+      </el-form-item>
+
+      <!-- 教室属性设置 -->
+      <el-row :gutter="20">
+        <el-col :span="8">
+          <el-form-item label="教室类型" prop="roomType">
+            <el-select
+              v-model="classroomForm.roomType"
+              placeholder="选择教室类型"
+              style="width: 100%"
+            >
+              <el-option label="普通教室" value="normal" />
+              <el-option label="实验室" value="lab" />
+              <el-option label="多媒体教室" value="multimedia" />
+              <el-option label="专用教室" value="special" />
+            </el-select>
+          </el-form-item>
+        </el-col>
+
+        <el-col :span="8">
+          <el-form-item label="容纳人数" prop="capacity">
+            <el-input-number
+              v-model="classroomForm.capacity"
+              :min="0"
+              :max="300"
+              controls-position="right"
+              style="width: 100%"
+            />
+          </el-form-item>
+        </el-col>
+
+        <el-col :span="8">
+          <el-form-item label="楼层限制" prop="floor">
+            <el-input-number
+              v-model="classroomForm.floor"
+              :min="-1"
+              :max="10"
+              controls-position="right"
+              style="width: 100%"
+            />
+          </el-form-item>
+        </el-col>
+      </el-row>
+
+      <!-- 禁排原因（与原有样式保持一致） -->
+      <el-form-item label="禁排原因" prop="reason">
+        <el-checkbox-group v-model="classroomForm.reason" class="reason-group">
+          <el-row :gutter="10">
+            <el-col :span="24">
+              <el-checkbox label="教室设备维护" style="white-space: nowrap;"  />
+            </el-col>
+            <el-col :span="24">
+              <el-checkbox label="教室装修施工"style="white-space: nowrap;"  />
+            </el-col>
+          </el-row>
+
+          <el-row :gutter="10" style="margin-top:8px">
+            <el-col :span="24">
+              <el-checkbox label="特殊考试安排"style="white-space: nowrap;"  />
+            </el-col>
+          </el-row>
+
+          <el-row :gutter="10" style="margin-top:8px">
+            <el-col :span="24" >
+              <el-checkbox label="校级活动占用" style="white-space: nowrap;" />
+            </el-col>
+          </el-row>
+
+
+          <el-row :gutter="10" style="margin-top:8px">
+            <el-col :span="24">
+              <el-checkbox label="其他原因（需备注）" />
+              <el-input
+                v-if="classroomForm.reason.includes('其他原因（需备注）')"
+                v-model="classroomForm.remark"
+                placeholder="请输入具体原因"
+                style="margin-top:8px;width:80%"
+              />
+            </el-col>
+          </el-row>
+        </el-checkbox-group>
+      </el-form-item>
+
+
+      <!-- 冲突检测与提交 -->
+      <el-form-item>
+        <el-button type="primary" @click="checkClassroomConflict">冲突检测</el-button>
+        <el-button type="success" @click="submitClassroomForm">提交设置</el-button>
+      </el-form-item>
+    </el-form>
+
+
+      <el-form :model="form" :rules="rules" ref="ruleFormRef" label-width="120px">
+        <div class="form-title">学生维度禁排</div>
+<el-form-item label="学生选择" prop="students">
+<el-select v-model="form.students" multiple placeholder="请选择学生">
+<el-option v-for="student in studentsList" :key="student.value" :label="student.label" :value="student.value"/></el-select></el-form-item>
+
+<el-form-item label="课程选择" prop="courses">
+<el-select v-model="form.courses" multiple placeholder="请选择课程">
+<el-option v-for="course in coursesList" :key="course.value" :label="course.label" :value="course.value"/></el-select></el-form-item>
+
+<el-form-item label="禁排时间" prop="dateRange">
+<el-date-picker v-model="form.dateRange" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期"/>
+<el-time-picker v-model="form.timeRange" is-range range-separator="至" start-placeholder="开始时间" end-placeholder="结束时间"/></el-form-item>
+
+<el-form-item label="禁排原因" prop="reason">
+<el-select v-model="form.reason" placeholder="请选择禁排原因">
+<el-option label="课程时间冲突（与其他课程重叠）" value="conflict"/>
+<el-option label="学生实习或社会实践安排" value="internship"/>
+<el-option label="学业压力过大，需调整课表" value="stress"/>
+<el-option label="特定时间段无法上课（如早晚课安排）" value="time_limit"/>
+<el-option label="跨专业或跨年级课程时间协调" value="cross_major"/>
+<el-option label="考试周或重要考试前的时间安排" value="exam_week"/>
+<el-option label="其他" value="other"/></el-select></el-form-item>
+
+<el-form-item label="优先级" prop="priority">
+<el-select v-model="form.priority" placeholder="请选择优先级">
+<el-option label="高" value="high"/>
+<el-option label="中" value="medium"/>
+<el-option label="低" value="low"/></el-select></el-form-item>
+
+<el-form-item>
+<el-button type="primary" @click="submitForm">提交</el-button></el-form-item>
+</el-form>
+
+
+    </div>
+
+
+
+  </main>
+
+  <!-- 脚本部分 -->
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+  <script src="https://unpkg.com/element-ui@2.15.14/lib/index.js"></script>
+  <script>
+    // 解决Vue生产提示
+    Vue.config.productionTip = false;
+
+    // 注册ElementUI
+    Vue.use(ELEMENT, {
+      size: 'small',
+      zIndex: 3000
+    });
+
+    new Vue({
+      el: '#app',
+      data() {
+        return {
+          form: {
+            ruleName: "",
+            dateRange: [],
+            cycleMode: [],
+            blockType: "",
+            urgencyLevel: "常规",
+            students:[],
+            courses:[],
+            dateRange:[],
+            timeRange:[],
+            reason:"",
+            priority:"",
+          },
+          teacherForm: {
+            teachers: [],
+            courses: [],
+            dateRange: [],
+            timeRange: [],
+            courseType: "",
+            venueType: "",
+            blockScheduling: false,
+            reason: [],
+            priority: "",
+            searchKey: "", // 教师搜索关键词
+            courseSearchKey: "" // 课程搜索关键词
+          },
+          teachersList: [
+  { "label": "韩春林老师", "value": "hanChunlin" },
+  { "label": "李玲玉老师", "value": "liLingyu" },
+  { "label": "钟薇老师", "value": "zhongWei" },
+  { "label": "陈丽娜老师", "value": "chenLina" },
+  { "label": "李胜科老师", "value": "liShengke" },
+  { "label": "桂永春老师", "value": "guiYongchun" },
+  { "label": "吴玉梅老师", "value": "wuYumei" },
+  { "label": "陈忠宏老师", "value": "chenZhonghong" },
+  { "label": "张燕青老师", "value": "zhangYanqing" },
+  { "label": "史学斌老师", "value": "shiXuebin" },
+  { "label": "于鹤文老师", "value": "yuHewen" },
+  { "label": "李荣老师", "value": "liRong" },
+  { "label": "陈录琴老师", "value": "chenLuqin" },
+  { "label": "杨文莉老师", "value": "yangWenli" },
+  { "label": "马万俊老师", "value": "maWanjun" },
+  { "label": "吴小银老师", "value": "wuXiaoyin" },
+  { "label": "王晶晶老师", "value": "wangJingjing" },
+  { "label": "胡娜老师", "value": "huNa" },
+  { "label": "李庆霞老师", "value": "liQingxia" },
+  { "label": "古丽博斯坦·艾比不拉老师", "value": "guliBositanaibibula" },
+  { "label": "朱曦老师", "value": "zhuXi" },
+  { "label": "马欢老师", "value": "maHuan" },
+  { "label": "徐悦馨老师", "value": "xuYuexin" },
+  { "label": "张桂香老师", "value": "zhangGuixiang" },
+  { "label": "王艳奇老师", "value": "wangYanqi" },
+  { "label": "王国华老师", "value": "wangGuohua" },
+  { "label": "李来徽老师", "value": "liLaihui" },
+  { "label": "娄翠萍老师", "value": "louCuiping" },
+  { "label": "栾雪梅老师", "value": "luanXuemei" },
+  { "label": "杨芬老师", "value": "yangFen" },
+  { "label": "梁金枝老师", "value": "liangJinzhi" },
+  { "label": "谭晓芸老师", "value": "tanXiaoyun" },
+  { "label": "魏曙娟老师", "value": "weiShujuan" },
+  { "label": "唐晶晶老师", "value": "tangJingjing" },
+  { "label": "王冬梅老师", "value": "wangDongmei" }
+],
+
+          coursesList: [
+            { label: "高等数学", value: "math" },
+            { label: "物理实验", value: "physics_lab" },
+            { label: "计算机基础", value: "computer" },
+            { label: "数据结构", value: "data_structure" },
+            { label: "算法设计", value: "algorithm" }
+          ],
+          conflictDialog: false,
+          conflictDates: [],
+          classroomForm: {
+            classrooms: [],
+            dateRange: [],
+            timeRange: [],
+            roomType: '',
+            capacity: 0,
+            floor: -1,
+            reason: [],
+            remark: ''
+          },
+          classroomsList: [
+            { label: "A101（多媒体）", value: "A101" },
+            { label: "B203（实验室）", value: "B203" },
+            { label: "C305（阶梯）", value: "C305" }
+          ],
+          classroomRules: {
+            classrooms: [{ required: true, message: "请选择教室", trigger: "change" }],
+            dateRange: [{ required: true, message: "请选择时间范围", trigger: "change" }],
+            roomType: [{ required: true, message: "请选择教室类型", trigger: "change" }]
+          },
+          studentsList:[
+            {label:"张三",value:"zhangsan"},
+            {label:"李四",value:"lisi"},
+            {label:"王五",value:"wangwu"},
+          ],
+          coursesList:[
+            {label:"高等数学",value:"math"},
+            {label:"大学物理",value:"physics"},
+            {label:"计算机基础",value:"computer"},
+          ],
+
+
+          rules: {
+            ruleName: [
+              { required: true, message: "请输入规则名称", trigger: "blur" },
+              { max: 20, message: "名称不能超过20个字符", trigger: "blur" },
+            ],
+            dateRange: [
+              { required: true, message: "请选择时间范围", trigger: "change" },
+            ],
+            blockType: [
+              { required: true, message: "请选择禁排类型", trigger: "change" },
+            ],
+          },
+          teacherRules: {
+            teachers: [
+              { required: true, message: "请选择教师", trigger: "change" },
+            ],
+            courses: [{ required: true, message: "请选择课程", trigger: "change" }],
+            dateRange: [
+              { required: true, message: "请选择禁排时间", trigger: "change" },
+            ],
+            priority: [
+              { required: true, message: "请选择优先级", trigger: "change" },
+            ],
+            students: [
+  { required: true, message: "请选择学生", trigger: "change" },
+],
+courses: [
+  { required: true, message: "请选择课程", trigger: "change" },
+],
+dateRange: [
+  { required: true, message: "请选择禁排时间", trigger: "change" },
+],
+reason: [
+  { required: true, message: "请选择禁排原因", trigger: "change" },
+],
+priority: [
+  { required: true, message: "请选择优先级", trigger: "change" },
+],
+          },
+
+        };
+      },
+      computed: {
+        // 过滤教师列表
+        filteredTeachers() {
+          return this.teachersList.filter(teacher =>
+            teacher.label.includes(this.teacherForm.searchKey || '')
+          );
+        },
+        // 过滤课程列表
+        filteredCourses() {
+          return this.coursesList.filter(course =>
+            course.label.includes(this.teacherForm.courseSearchKey || '')
+          );
+        },
+        classroomForm: {
+        classrooms: [],
+        dateRange: [],
+        timeRange: [],
+        roomType: '',
+        capacity: 0,
+        floor: -1,
+        reason: [],
+        remark: ''
+      },
+      classroomsList: [
+        { label: "A101（多媒体教室）", value: "A101" },
+        { label: "B203（计算机实验室）", value: "B203" },
+        { label: "C305（阶梯教室）", value: "C305" }
+      ],
+      classroomRules: {
+        classrooms: [
+          { required: true, message: "请选择至少一个教室", trigger: "change" }
+        ],
+        dateRange: [
+          { required: true, message: "请选择禁排时间范围", trigger: "change" }
+        ],
+        roomType: [
+          { required: true, message: "请选择教室类型", trigger: "change" }
+        ]
+      }
+
+      },
+      methods: {
+        submitForm() {
+  this.$refs.ruleFormRef.validate((valid) => {
+    if (valid) {
+      console.log("提交数据", this.form);
+    }
+  });
+},
+        checkConflict() {
+          // 模拟检测冲突日期
+          this.conflictDates = ["2025-05-01", "2025-10-01"];
+          this.conflictDialog = true;
+        },
+        resolveConflict() {
+          this.conflictDialog = false;
+          this.conflictDates = [];
+        },
+        submitForm() {
+          this.$refs.ruleFormRef.validate((valid) => {
+            if (valid) {
+              console.log("提交数据", this.form);
+            }
+          });
+        },
+        submitTeacherForm() {
+          this.$refs.teacherFormRef.validate((valid) => {
+            if (valid) {
+              console.log("提交教师维度禁排数据", this.teacherForm);
+            }
+          });
+        },
+        // 新增教室维度方法
+        checkClassroomConflict() {
+         this.$axios.get('/api/conflict-check', {
+         params: {
+          classrooms: this.classroomForm.classrooms,
+          dates: this.classroomForm.dateRange
+         }
+          }).then(response => {
+           if(response.data.conflicts.length > 0) {
+            this.$alert(`发现${response.data.conflicts.length}处冲突`, '冲突提示', {
+              confirmButtonText: '查看详情',
+               callback: action => {
+                this.showConflictDetails(response.data.conflicts)
+            }
+          })
+            } else {
+              this.$message.success('无冲突时段')
+            }
+      })
+      },
+         submitClassroomForm() {
+          this.$refs.classroomFormRef.validate(valid => {
+            if (valid) {
+              console.log('提交数据:', this.classroomForm)
+              this.$message.success('设置保存成功')
+            }
+          })
+        },
+        resetForm() {
+          this.$refs.classroomFormRef.resetFields()
+        },
+      mounted() {
+        // 确保表格正确渲染
+        this.$nextTick(() => {
+          if (this.$refs.table) {
+            this.$refs.table.doLayout();
+          }
+        });
+      }
+    },
+    });
+  </script>
+
+
+
+</body>
+</html>

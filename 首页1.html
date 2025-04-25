@@ -1,0 +1,1093 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+
+  <title>组织管理 - NiceAdmin Bootstrap Template</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- ElementUI 样式 -->
+  <link rel="stylesheet" href="https://unpkg.com/element-ui@2.15.14/lib/theme-chalk/index.css">
+
+  <!-- Favicons -->
+  <link href="../assets/img/favicon.png" rel="icon">
+  <link href="../assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.gstatic.com" rel="preconnect">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="../assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="../assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="../assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="../assets/vendor/quill/quill.snow.css" rel="stylesheet">
+  <link href="../assets/vendor/quill/quill.bubble.css" rel="stylesheet">
+  <link href="../assets/vendor/remixicon/remixicon.css" rel="stylesheet">
+  <link href="../assets/vendor/simple-datatables/style.css" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="../assets/css/style.css" rel="stylesheet">\
+   <script src="https://cdn.bootcdn.net/ajax/libs/echarts/5.4.1/echarts.min.js"></script>
+
+    <style>
+
+        /* 基础页面样式 - 控制整体页面边距和背景 */
+        body {
+            margin: 0; /* 去除默认边距 */
+            padding: 8px; /* 页面内边距，可增大使内容更宽松 */
+            font-family: Arial; /* 字体设置，可改为其他如'Segoe UI'等 */
+            background-color: #f0f2f5; /* 背景色，可调整为#f5f5f5等浅灰色 */
+        }
+
+        /* 仪表盘主容器 - 控制整体网格布局 */
+        .dashboard-container {
+
+            display: grid; /* 使用CSS Grid布局 */
+            grid-template-columns: 60% 40%; /* 列宽比例，可调整为55% 45%或70% 30% */
+            grid-template-rows: 400px 400px; /* 行高，可统一或分别设置如400px 350px */
+            gap: 20px; /* 卡片间距，可调整为15-25px */
+            max-width: 1400px; /* 最大宽度，可调整或设为100% */
+            margin: 0 auto; /* 水平居中 */
+        }
+
+        /* 卡片通用样式 - 所有图表的容器 */
+        .chart-card {
+            background: white; /* 卡片背景色 */
+            border-radius: 10px; /* 圆角大小，可调整为8px或12px */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 阴影效果，可调整透明度或扩散半径 */
+            padding: 10px; /* 内边距，可增大到15px使内容更宽松 */
+            position: relative; /* 为子元素绝对定位提供参照 */
+            overflow: visible; /* 允许内容溢出，设为hidden可裁剪溢出内容 */
+        }
+
+        /* 图表标题样式 */
+        .chart-title {
+            font-size: 16px; /* 标题字号，可增大到18px */
+            font-weight: bold; /* 字体粗细 */
+            color: #333; /* 文字颜色，可调整为#222等深色 */
+            margin-bottom: 15px; /* 下边距，控制与内容的间距 */
+            padding-left: 10px; /* 左内边距 */
+            border-left: 4px solid #3a5985; /* 左侧装饰线，可调整颜色或粗细 */
+        }
+
+        /* 图表容器 - 主要图表区域 */
+        .chart-wrapper {
+            width: 100%; /* 宽度100%填充容器 */
+            height:100%; /* 高度计算，可调整减去的像素值控制高度 */
+            /* 替代方案：使用flex布局
+            flex: 1;
+            min-height: 0; */
+        }
+
+        /* 学院选择下拉框 */
+        .select-box {
+            position: absolute; /* 绝对定位 */
+            top: 13px; /* 距顶部距离，可调整垂直位置 */
+            right: 20px; /* 距右侧距离 */
+            z-index: 10; /* 层级，确保显示在最前 */
+            padding: 5px 10px; /* 内边距，控制框体大小 */
+            font-size: 14px; /* 字号 */
+            border: 1px solid #ddd; /* 边框样式 */
+            border-radius: 5px; /* 圆角 */
+            background: white; /* 背景色 */
+            /* 可添加hover效果：
+            transition: all 0.3s;
+            &:hover { border-color: #3a5985; } */
+        }
+
+        /* 教师排课量特有样式 */
+        .teacher-chart-container {
+    position: relative;
+    height: calc(100% - 40px); /* 减少容器高度，留出更多空间给底部组件 */
+    margin-bottom: 1px; /* 添加底部间距 */
+}
+
+        /* 周选择条 - 时间轴样式 */
+        .week-line {
+            width: 90%; /* 宽度，可调整百分比 */
+            height: 0px; /* 基准高度，实际通过border显示 */
+            margin: -15px auto 0; /* 外边距，上边距控制与上方元素间距 */
+            position: relative; /* 相对定位 */
+            border-bottom: 2px solid #3a5985; /* 底部边框形成线条 */
+            /* 可添加动画效果：
+            transition: all 0.3s; */
+        }
+
+        /* 周选择条箭头 */
+        .week-line::after {
+            content: '➤'; /* 箭头字符，可改用图标字体 */
+            position: absolute;
+            right: -20px; /* 右侧偏移，控制箭头位置 */
+            bottom: -10px; /* 底部偏移 */
+            font-size: 20px; /* 字号 */
+            color: #3a5985; /* 颜色与线条一致 */
+            /* 可添加旋转动画：
+            transform: rotate(0deg);
+            transition: transform 0.3s; */
+        }
+
+        /* 周选择圆点 */
+        .week-dot {
+            position: absolute;
+            bottom: -6px; /* 垂直位置，控制与线条的距离 */
+            width: 12px; /* 默认大小 */
+            height: 12px;
+            background: #3a5985; /* 默认颜色 */
+            border-radius: 50%; /* 圆形 */
+            cursor: pointer; /* 手型指针 */
+            transition: all 0.3s; /* 动画效果 */
+            transform: translateX(-50%); /* 水平居中 */
+            /* 可添加hover效果：
+            &:hover { transform: translateX(-50%) scale(1.2); } */
+        }
+
+        /* 周选择圆点激活状态 */
+        .week-dot.active {
+            width: 16px; /* 激活时增大 */
+            height: 16px;
+            background: #89afe0; /* 激活颜色 */
+            bottom: -8px; /* 调整垂直位置 */
+            /* 可添加发光效果：
+            box-shadow: 0 0 5px rgba(137, 175, 224, 0.7); */
+        }
+
+        /* 周标签 */
+        .week-label {
+            position: absolute;
+            bottom: -25px; /* 距线条的距离 */
+            font-size: 12px; /* 字号 */
+            color: #3a5985; /* 颜色 */
+            transform: translateX(-50%); /* 水平居中 */
+            white-space: nowrap; /* 防止文字换行 */
+            /* 可添加hover效果：
+            transition: all 0.3s;
+            &:hover { color: #1a3a7a; } */
+        }
+
+        /* 当前周信息显示 */
+        .week-info {
+            width: 90%; /* 与周选择条同宽 */
+            text-align: center; /* 文字居中 */
+            font-size: 14px; /* 字号 */
+            color: #3a5985; /* 颜色 */
+            padding: 2px 0; /* 内边距 */
+            position: static; /* 静态定位，在文档流中 */
+            background: none; /* 透明背景 */
+            margin: -20px auto 0; /* 外边距，控制与上下元素间距 */
+            /* 可选样式：
+            border-bottom: 1px dashed #ccc; 虚线分割线
+            font-weight: bold; 加粗显示 */
+        }
+
+        /* 教室利用率容器 */
+        .utilization-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start; /* 改为 flex-start 让内容靠上 */
+    height: 100%;
+    padding: 10px;
+}
+
+        /* 进度圆环容器 */
+        .progress-container {
+            position: relative;
+            width: 180px; /* 直径，可调整大小 */
+            height: 180px;
+            margin-bottom: 15px; /* 下边距，控制与下方元素间距 */
+            /* 可添加响应式：
+            @media (max-width: 768px) { width: 150px; height: 150px; } */
+        }
+
+
+        .progress-circle {
+            width: 100%;
+            height: 100%;
+            transform: rotate(-90deg);
+        }
+        .progress-circle circle {
+            fill: none;
+            stroke-width: 10;
+            stroke-dasharray: 565.48;
+            stroke-dashoffset: 565.48;
+            stroke-linecap: round;
+            animation: progress 2s ease-out forwards;
+        }
+        .progress-circle circle.bg {
+            stroke: #e0e0e0;
+            stroke-dashoffset: 0;
+        }
+        .progress-circle circle.fg {
+            stroke: url(#gradient);
+            stroke-dashoffset: 565.48;
+        }
+        .progress-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+        .progress-text .percentage {
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 32px;
+            color: #333;
+            /*font-weight: bold;*/
+        }
+        .progress-text .label {
+            font-family: 'Arial', sans-serif;
+            font-size: 14px;
+            color: #666;
+            margin-top: 5px;
+        }
+        .info-row {
+    display: flex;
+    flex-direction: column;  /* 改为垂直排列 */
+    align-items: center;    /* 水平居中（可选） */
+    width: 100%;
+    margin-top: 10px;
+    font-size: 14px;
+    color: #666;
+    gap: 5px;              /* 增加行间距（可选） */
+}
+
+.info-item {
+    text-align: center;
+    padding: 0;            /* 移除水平 padding */
+}
+        /*.info-item {
+            text-align: center;
+            padding: 0 15px;
+        }*/
+        @keyframes progress {
+            to {
+                stroke-dashoffset: 81.9946;
+            }
+        }
+
+        /* 冲突预警特有样式 */
+        .warning-container {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        .warning-list {
+            flex: 1;
+            overflow-y: auto;
+            padding: 0 10px;
+        }
+        .warning-item {
+            padding: 10px 12px;
+            margin-bottom: 10px;
+            background-color: #fff9f9;
+            border-left: 3px solid #ff4d4f;
+            border-radius: 4px;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        .warning-item.high {
+            background-color: #fff2f0;
+            border-left: 3px solid #ff7875;
+        }
+        .warning-item.medium {
+            background-color: #fffbe6;
+            border-left: 3px solid #ffc53d;
+        }
+        .warning-item.low {
+            background-color: #f6ffed;
+            border-left: 3px solid #73d13d;
+        }
+        .tttitle{
+          margin-bottom: 10px;
+          margin-top: -20px !important; /* 移除或减小上边距 */
+          padding-top: 0 !important;
+        }
+    </style>
+</head>
+<body>
+
+<!-- ======= Header 顶部部分======= -->
+  <header id="header" class="header fixed-top d-flex align-items-center">
+
+    <div class="d-flex align-items-center justify-content-between">
+      <a href="index.html" class="logo d-flex align-items-center">
+        <img src="assets/img/logo.png" alt="">
+        <span class="d-none d-lg-block">课境云枢排课系统</span>
+      </a>
+      <i class="bi bi-list toggle-sidebar-btn"></i>
+    </div><!-- End Logo -->
+
+    <div class="search-bar">
+      <form class="search-form d-flex align-items-center" method="POST" action="#">
+        <input type="text" name="query" placeholder="Search" title="Enter search keyword">
+        <button type="submit" title="Search"><i class="bi bi-search"></i></button>
+      </form>
+    </div><!-- End Search Bar -->
+
+    <nav class="header-nav ms-auto">
+      <ul class="d-flex align-items-center">
+
+        <li class="nav-item d-block d-lg-none">
+          <a class="nav-link nav-icon search-bar-toggle " href="#">
+            <i class="bi bi-search"></i>
+          </a>
+        </li><!-- End Search Icon-->
+
+        <li class="nav-item dropdown">
+
+          <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
+            <i class="bi bi-bell"></i>
+            <span class="badge bg-primary badge-number">4</span>
+          </a><!-- End Notification Icon -->
+
+          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
+            <li class="dropdown-header">
+              You have 4 new notifications
+              <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li class="notification-item">
+              <i class="bi bi-exclamation-circle text-warning"></i>
+              <div>
+                <h4>Lorem Ipsum</h4>
+                <p>Quae dolorem earum veritatis oditseno</p>
+                <p>30 min. ago</p>
+              </div>
+            </li>
+
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li class="notification-item">
+              <i class="bi bi-x-circle text-danger"></i>
+              <div>
+                <h4>Atque rerum nesciunt</h4>
+                <p>Quae dolorem earum veritatis oditseno</p>
+                <p>1 hr. ago</p>
+              </div>
+            </li>
+
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li class="notification-item">
+              <i class="bi bi-check-circle text-success"></i>
+              <div>
+                <h4>Sit rerum fuga</h4>
+                <p>Quae dolorem earum veritatis oditseno</p>
+                <p>2 hrs. ago</p>
+              </div>
+            </li>
+
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li class="notification-item">
+              <i class="bi bi-info-circle text-primary"></i>
+              <div>
+                <h4>Dicta reprehenderit</h4>
+                <p>Quae dolorem earum veritatis oditseno</p>
+                <p>4 hrs. ago</p>
+              </div>
+            </li>
+
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li class="dropdown-footer">
+              <a href="#">Show all notifications</a>
+            </li>
+
+          </ul><!-- End Notification Dropdown Items -->
+
+        </li><!-- End Notification Nav -->
+
+        <li class="nav-item dropdown">
+
+          <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
+            <i class="bi bi-chat-left-text"></i>
+            <span class="badge bg-success badge-number">3</span>
+          </a><!-- End Messages Icon -->
+
+          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages">
+            <li class="dropdown-header">
+              You have 3 new messages
+              <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li class="message-item">
+              <a href="#">
+                <img src="assets/img/messages-1.jpg" alt="" class="rounded-circle">
+                <div>
+                  <h4>Maria Hudson</h4>
+                  <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
+                  <p>4 hrs. ago</p>
+                </div>
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li class="message-item">
+              <a href="#">
+                <img src="assets/img/messages-2.jpg" alt="" class="rounded-circle">
+                <div>
+                  <h4>Anna Nelson</h4>
+                  <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
+                  <p>6 hrs. ago</p>
+                </div>
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li class="message-item">
+              <a href="#">
+                <img src="assets/img/messages-3.jpg" alt="" class="rounded-circle">
+                <div>
+                  <h4>David Muldon</h4>
+                  <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
+                  <p>8 hrs. ago</p>
+                </div>
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li class="dropdown-footer">
+              <a href="#">Show all messages</a>
+            </li>
+
+          </ul><!-- End Messages Dropdown Items -->
+
+        </li><!-- End Messages Nav -->
+
+        <li class="nav-item dropdown pe-3">
+
+          <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+            <img src="assets/img/profile-img.jpg" alt="Profile" class="rounded-circle">
+            <span class="d-none d-md-block dropdown-toggle ps-2">K. Anderson</span>
+          </a><!-- End Profile Iamge Icon -->
+
+          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
+            <li class="dropdown-header">
+              <h6>Kevin Anderson</h6>
+              <span>Web Designer</span>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li>
+              <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
+                <i class="bi bi-person"></i>
+                <span>My Profile</span>
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li>
+              <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
+                <i class="bi bi-gear"></i>
+                <span>Account Settings</span>
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li>
+              <a class="dropdown-item d-flex align-items-center" href="pages-faq.html">
+                <i class="bi bi-question-circle"></i>
+                <span>Need Help?</span>
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li>
+              <a class="dropdown-item d-flex align-items-center" href="#">
+                <i class="bi bi-box-arrow-right"></i>
+                <span>Sign Out</span>
+              </a>
+            </li>
+
+          </ul><!-- End Profile Dropdown Items -->
+        </li><!-- End Profile Nav -->
+
+      </ul>
+    </nav><!-- End Icons Navigation -->
+
+  </header><!-- End Header -->
+
+  <!-- ======= Sidebar侧边栏！！ ======= -->
+  <aside id="sidebar" class="sidebar">
+
+    <ul class="sidebar-nav" id="sidebar-nav">
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="index.html">
+          <i class="bi bi-grid"></i>
+          <span>首页</span>
+        </a>
+      </li><!-- End Dashboard Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-menu-button-wide"></i><span>基本数据</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+          <li>
+            <a href="基本数据-教室数据-yes引入elelment改进版本又改进版--已确定！.html">
+              <i class="bi bi-circle"></i><span>教室数据</span>
+            </a>
+          </li>
+          <li>
+            <a href="教师数据.html">
+              <i class="bi bi-circle"></i><span>教师信息</span>
+            </a>
+          </li>
+          <li>
+            <a href="components-badges.html">
+              <i class="bi bi-circle"></i><span>学生信息</span>
+            </a>
+          </li>
+          <li>
+            <a href="components-breadcrumbs.html">
+              <i class="bi bi-circle"></i><span>课程库</span>
+            </a>
+          </li>
+          <li>
+            <a href="components-buttons.html">
+              <i class="bi bi-circle"></i><span>专业数据</span>
+            </a>
+          </li>
+          <li>
+            <a href="components-cards.html">
+              <i class="bi bi-circle"></i><span>班级数据</span>
+            </a>
+          </li>
+          <li>
+            <a href="components-carousel.html">
+              <i class="bi bi-circle"></i><span>教学楼信息</span>
+            </a>
+          </li>
+          <li>
+            <a href="components-list-group.html">
+              <i class="bi bi-circle"></i><span>部门数据</span>
+            </a>
+          </li>
+          <li>
+            <a href="components-modal.html">
+              <i class="bi bi-circle"></i><span>专业方向</span>
+            </a>
+          </li>
+          <!--<li>
+            <a href="components-tabs.html">
+              <i class="bi bi-circle"></i><span>Tabs</span>
+            </a>
+          </li>
+          <li>
+            <a href="components-pagination.html">
+              <i class="bi bi-circle"></i><span>Pagination</span>
+            </a>
+          </li>
+          <li>
+            <a href="components-progress.html">
+              <i class="bi bi-circle"></i><span>Progress</span>
+            </a>
+          </li>
+          <li>
+            <a href="components-spinners.html">
+              <i class="bi bi-circle"></i><span>Spinners</span>
+            </a>
+          </li>-->
+         <!-- <li>
+            <a href="components-tooltips.html">
+              <i class="bi bi-circle"></i><span>Tooltips</span>
+            </a>
+          </li>-->
+        </ul>
+      </li><!-- End Components Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-journal-text"></i><span>智能排课</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+          <li>
+            <a href="forms-elements.html">
+              <i class="bi bi-circle"></i><span>Form Elements</span>
+            </a>
+          </li>
+          <li>
+            <a href="forms-layouts.html">
+              <i class="bi bi-circle"></i><span>Form Layouts</span>
+            </a>
+          </li>
+          <li>
+            <a href="forms-editors.html">
+              <i class="bi bi-circle"></i><span>Form Editors</span>
+            </a>
+          </li>
+          <li>
+            <a href="forms-validation.html">
+              <i class="bi bi-circle"></i><span>Form Validation</span>
+            </a>
+          </li>
+        </ul>
+      </li><!-- End Forms Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link " data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-layout-text-window-reverse"></i><span>组织管理</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="tables-nav" class="nav-content collapse show" data-bs-parent="#sidebar-nav">
+          <li>
+            <a href="偏好设置3.html">
+              <i class="bi bi-circle" class="active"></i><span>偏好设置</span>
+            </a>
+          </li>
+          <li>
+            <a href="整个页面！！！！！！！组织管理 请假审批--已确定！.html" >
+              <i class="bi bi-circle"></i><span>请假审批</span>
+            </a>
+          </li>
+        </ul>
+      </li><!-- End Tables Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#charts-nav" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-bar-chart"></i><span>排课表查询</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="charts-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+          <li>
+            <a href="尝试完整课表页面！！！课表查询-已确定！.html">
+              <i class="bi bi-circle"></i><span>班级课表查询</span>
+            </a>
+          </li>
+          <li>
+            <a href="charts-apexcharts.html">
+              <i class="bi bi-circle"></i><span>学生课表查询</span>
+            </a>
+          </li>
+          <li>
+            <a href="charts-echarts.html">
+              <i class="bi bi-circle"></i><span>教师课表查询</span>
+            </a>
+          </li>
+          <li>
+            <a href="嵌入了elementuizz的页面-课程添加已确定！.html">
+              <i class="bi bi-circle"></i><span>添加课程</span>
+            </a>
+          </li>
+        </ul>
+      </li><!-- End Charts Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#icons-nav" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-gem"></i><span>排课规则</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="icons-nav" class="nav-content collapse show " data-bs-parent="#sidebar-nav">
+          <li>
+            <a href="排课规则-排课方案设置-yes大幅度修改了一下的.html">
+              <i class="bi bi-circle"></i><span>排课方案设置</span>
+            </a>
+          </li>
+          <li>
+            <a href="排课规则-禁排设置-yes-禁排第五次-原因显示混乱但增加维度-暂时确定.html">
+              <i class="bi bi-circle"></i><span>禁排设置</span>
+            </a>
+          </li>
+        </ul>
+      </li><!-- End Icons Nav -->
+
+      <li class="nav-heading">Pages</li>
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="users-profile.html">
+          <i class="bi bi-person"></i>
+          <span>统计信息</span>
+        </a>
+      </li><!-- End Profile Page Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="pages-faq.html">
+          <i class="bi bi-question-circle"></i>
+          <span>更多帮助</span>
+        </a>
+      </li><!-- End F.A.Q Page Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="pages-contact.html">
+          <i class="bi bi-envelope"></i>
+          <span>联系我们</span>
+        </a>
+      </li><!-- End Contact Page Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="pages-register.html">
+          <i class="bi bi-card-list"></i>
+          <span>后台管理</span>
+        </a>
+      </li><!-- End Register Page Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="pages-login.html">
+          <i class="bi bi-box-arrow-in-right"></i>
+          <span>登录问题</span>
+        </a>
+      </li><!-- End Login Page Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="pages-error-404.html">
+          <i class="bi bi-dash-circle"></i>
+          <span>Error 404</span>
+        </a>
+      </li><!-- End Error 404 Page Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="pages-blank.html">
+          <i class="bi bi-file-earmark"></i>
+          <span>Blank</span>
+        </a>
+      </li><!-- End Blank Page Nav -->
+
+    </ul>
+
+  </aside><!-- End Sidebar-->
+
+<main id="main" class="main">
+    <div class="tttitle">
+        <h1>首页</h1>
+        <!--<nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="index.html">首页</a></li>
+                <li class="breadcrumb-item active">数据看板</li>
+            </ol>
+        </nav>-->
+    </div>
+
+    <div class="dashboard-container">
+        <!-- 教师排课量组件 -->
+        <div class="chart-card">
+          <div class="teacher-chart-container">
+            <div class="chart-title">教师排课量</div>
+            <select class="select-box" id="collegeSelect">
+                <option value="教育艺术学院">教育艺术学院</option>
+                <option value="化学与材料工程学院">化学与材料工程学院</option>
+                <option value="信息智能工程学院">信息智能工程学院</option>
+                <option value="公共基础学院">公共基础学院</option>
+                <option value="马克思主义学院">马克思主义学院</option>
+                <option value="汽车与智能交通学院">汽车与智能交通学院</option>
+                <option value="机械电气工程学院">机械电气工程学院</option>
+                <option value="现代农业学院">现代农业学院</option>
+                <option value="教务处">教务处</option>
+                <option value="党委行政办公室">党委行政办公室</option>
+            </select>
+            <!--<div class="week-info" id="weekInfo">当前周：<span id="selectedWeek">周一</span></div>-->
+            <div class="chart-wrapper" id="teacherChart"></div>
+          </div>
+          <!--<div class="week-info" id="weekInfo">当前周：<span id="selectedWeek">周一</span></div>-->
+          <div class="week-line" id="weekLine">
+
+                <div class="week-dot" style="left: 0%;" data-week="周一"></div>
+                <div class="week-label" style="left: 0%;">周一</div>
+                <div class="week-dot" style="left: 16.66%;" data-week="周二"></div>
+                <div class="week-label" style="left: 16.66%;">周二</div>
+                <div class="week-dot" style="left: 33.33%;" data-week="周三"></div>
+                <div class="week-label" style="left: 33.33%;">周三</div>
+                <div class="week-dot" style="left: 50%;" data-week="周四"></div>
+                <div class="week-label" style="left: 50%;">周四</div>
+                <div class="week-dot" style="left: 66.66%;" data-week="周五"></div>
+                <div class="week-label" style="left: 66.66%;">周五</div>
+                <div class="week-dot" style="left: 83.33%;" data-week="周六"></div>
+                <div class="week-label" style="left: 83.33%;">周六</div>
+                <div class="week-dot" style="left: 100%;" data-week="周日"></div>
+                <div class="week-label" style="left: 100%;">周日</div>
+          </div>
+        </div>
+
+        <!-- 教室利用率组件 -->
+        <div class="chart-card">
+            <div class="chart-title">教室利用率</div>
+            <div class="utilization-container">
+                <div class="progress-container">
+                    <svg class="progress-circle" viewBox="0 0 200 200">
+                        <defs>
+                            <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" style="stop-color:#faedcd;stop-opacity:1" />
+                                <stop offset="100%" style="stop-color:#d4a373;stop-opacity:1" />
+                            </linearGradient>
+                        </defs>
+                        <circle class="bg" cx="100" cy="100" r="90"></circle>
+                        <circle class="fg" cx="100" cy="100" r="90"></circle>
+                    </svg>
+                    <div class="progress-text">
+                        <div class="percentage">85.5%</div>
+                        <div class="label">教室利用率</div>
+                    </div>
+                </div>
+                <div class="info-row">
+                    <div class="info-item">总教室数: 290</div>
+                    <div class="info-item">使用中: 248</div>
+                    <div class="info-item">空闲数: 42</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 课程分布合理性组件 -->
+        <div class="chart-card">
+            <div class="chart-title">课程分布合理性分析</div>
+            <div class="chart-wrapper" id="distributionChart"></div>
+        </div>
+
+        <!-- 课程冲突预警组件 -->
+        <div class="chart-card">
+            <div class="chart-title">课程冲突预警 (本周)</div>
+            <div class="warning-container">
+                <div class="warning-list" id="warningList">
+                    <div class="warning-item high">
+                        <strong>[严重冲突]</strong> 周三第3-4节: 程双儿老师的《教育学原理》与巩俞含老师的《教育心理学》同时安排在302教室
+                    </div>
+                    <div class="warning-item medium">
+                        <strong>[时间冲突]</strong> 周二第5-6节: 曹立汶老师同时在两个班级授课
+                    </div>
+                    <div class="warning-item low">
+                        <strong>[建议调整]</strong> 王艺璇老师连续4节课无间隔，建议分散安排
+                    </div>
+                    <div class="warning-item medium">
+                        <strong>[教室冲突]</strong> 周四第7-8节: 两个班级同时安排在501教室
+                    </div>
+                    <div class="warning-item low">
+                        <strong>[建议优化]</strong> 周五第1-2节: 专业课程过于集中，学生负担重
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // 教师排课量图表
+       var teacherData = [{"姓名": "程双儿", "排课量": 7}, {"姓名": "巩俞含", "排课量": 6}, {"姓名": "曹立汶", "排课量": 5}, {"姓名": "王艺璇", "排课量": 5}, {"姓名": "薄媛元", "排课量": 4}, {"姓名": "李雪瑶", "排课量": 7}, {"姓名": "常阳", "排课量": 5}, {"姓名": "马逸伦", "排课量": 7}, {"姓名": "赵银芳", "排课量": 1}, {"姓名": "靳忠宏", "排课量": 6}, {"姓名": "董家佑", "排课量": 4}, {"姓名": "刘星", "排课量": 3}, {"姓名": "高占鹏", "排课量": 2}, {"姓名": "罗梦娇", "排课量": 3}, {"姓名": "史正兵", "排课量": 2}, {"姓名": "赵兰兰", "排课量": 1}, {"姓名": "唐阳阳", "排课量": 7}, {"姓名": "刘玉阁", "排课量": 3}, {"姓名": "刘亚萍", "排课量": 3}, {"姓名": "赵雪宁", "排课量": 6}, {"姓名": "李富丽", "排课量": 1}, {"姓名": "高艺祯", "排课量": 8}, {"姓名": "于东晖", "排课量": 4}, {"姓名": "石云", "排课量": 6}, {"姓名": "赵伟华", "排课量": 3}, {"姓名": "李杰超", "排课量": 6}, {"姓名": "张萍", "排课量": 4}, {"姓名": "陈娟霞", "排课量": 8}, {"姓名": "王凡兰", "排课量": 4}, {"姓名": "孙思邈", "排课量": 7}, {"姓名": "曹镛", "排课量": 4}, {"姓名": "郭娜", "排课量": 3}, {"姓名": "马华丽", "排课量": 4}, {"姓名": "罗薇", "排课量": 3}, {"姓名": "向晓琼", "排课量": 8}];
+        var colorScheme = ["#e4e4e4", "#d5deef", "#b2caee", "#89afe0", "#3a5985"];
+        var teacherChart = echarts.init(document.getElementById('teacherChart'), 'light');
+
+        var teachers = teacherData.map(t => t['姓名']);
+        var courses = teacherData.map(t => t['排课量']);
+
+        var teacherOption = {
+            tooltip: {
+                trigger: 'axis',
+                formatter: '{b}: {c}节'
+            },
+            xAxis: {
+                type: 'category',
+                data: teachers,
+                axisLabel: {
+                    rotate: 45,
+                    margin: 15,
+                    fontSize: 12
+                },
+                axisTick: {
+                    alignWithLabel: true
+                }
+            },
+            yAxis: {
+                type: 'value',
+                name: '节数',
+                max: 8,
+                minInterval: 1
+            },
+            series: [{
+                data: courses,
+                type: 'bar',
+                itemStyle: {
+                    color: function(params) {
+                        return colorScheme[params.dataIndex % colorScheme.length];
+                    },
+                    borderRadius: [4, 4, 0, 0]
+                },
+                barWidth: '60%',
+                label: {
+                    show: true,
+                    position: 'top',
+                    formatter: '{c}'
+                }
+            }],
+            grid: {
+                top: '15%',
+                bottom: '25%',
+                left: '10%',
+                right: '5%',
+                containLabel: true
+            }
+        };
+        teacherChart.setOption(teacherOption);
+
+        // 课程分布合理性图表
+        var distributionChart = echarts.init(document.getElementById('distributionChart'), 'light');
+        var distributionOption = {
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {
+                    type: 'shadow'
+                },
+                formatter: function(params) {
+                    let result = params[0].axisValue + '<br>';
+                    params.forEach(item => {
+                        result += `${item.marker} ${item.seriesName}: ${item.value}<br>`;
+                    });
+                    return result;
+                }
+            },
+            legend: {
+                data: ['理论课', '实践课', '选修课'],
+                bottom: 0
+            },
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '15%',
+                top: '15%',
+                containLabel: true
+            },
+            xAxis: {
+                type: 'value',
+                name: '课程数量',
+                axisLabel: {
+                    fontSize: 12
+                }
+            },
+            yAxis: {
+                type: 'category',
+                data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日'],
+                name: '星期',
+                axisLabel: {
+                    fontSize: 12
+                }
+            },
+            series: [
+                {
+                    name: '理论课',
+                    type: 'bar',
+                    stack: 'total',
+                    emphasis: {
+                        focus: 'series'
+                    },
+                    data: [12, 15, 13, 14, 16, 5, 2],
+                    itemStyle: {
+                        color: '#89afe0',
+                        borderRadius: [0, 0, 0, 0]
+                    },
+                    label: {
+                        show: true,
+                        position: 'inside',
+                        formatter: '{c}'
+                    }
+                },
+                {
+                    name: '实践课',
+                    type: 'bar',
+                    stack: 'total',
+                    emphasis: {
+                        focus: 'series'
+                    },
+                    data: [8, 7, 9, 6, 5, 3, 1],
+                    itemStyle: {
+                        color: '#d4a373',
+                        borderRadius: [0, 0, 0, 0]
+                    },
+                    label: {
+                        show: true,
+                        position: 'inside',
+                        formatter: '{c}'
+                    }
+                },
+                {
+                    name: '选修课',
+                    type: 'bar',
+                    stack: 'total',
+                    emphasis: {
+                        focus: 'series'
+                    },
+                    data: [5, 6, 4, 7, 3, 2, 1],
+                    itemStyle: {
+                        color: '#a0d468',
+                        borderRadius: [0, 0, 0, 0]
+                    },
+                    label: {
+                        show: true,
+                        position: 'inside',
+                        formatter: '{c}'
+                    }
+                }
+            ]
+        };
+        distributionChart.setOption(distributionOption);
+
+        // 周圆点点击事件
+        var weekDots = document.querySelectorAll('.week-dot');
+        var selectedWeek = document.getElementById('selectedWeek');
+
+        weekDots.forEach(dot => {
+            dot.addEventListener('click', function() {
+                // 移除所有圆点的 active 类
+                weekDots.forEach(d => d.classList.remove('active'));
+                // 为当前圆点添加 active 类
+                this.classList.add('active');
+                // 更新选中的周信息
+                selectedWeek.textContent = this.getAttribute('data-week');
+
+                // 这里可以添加根据周筛选数据的逻辑
+                console.log('当前选择周:', this.getAttribute('data-week'));
+            });
+        });
+
+        // 默认选中周一
+        if(weekDots.length > 0) {
+            weekDots[0].click();
+        }
+
+        // 下拉框事件监听
+        var select = document.getElementById('collegeSelect');
+        select.addEventListener('change', function() {
+            // 这里可以扩展为动态加载其他学院数据
+            teacherChart.setOption({
+                title: {
+                    text: this.value + '教师排课量'
+                }
+            });
+        });
+
+        // 窗口大小变化时重新调整图表大小
+        window.addEventListener('resize', function() {
+            teacherChart.resize();
+            distributionChart.resize();
+        });
+    });
+</script>
+</body>
+</html>
+

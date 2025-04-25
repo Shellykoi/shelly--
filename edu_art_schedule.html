@@ -1,0 +1,203 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>教育艺术学院教师排课量看板</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/echarts/5.4.1/echarts.min.js"></script>
+    <style>
+        body { 
+            padding: 20px; 
+            font-family: Arial; 
+            background-color: #f0f2f5; 
+        }
+        .chart-container { 
+            width: 1200px; 
+            height: 650px; /* 调整高度以减少空白 */
+            margin: 0 auto; 
+            background: white; 
+            border-radius: 10px; 
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+            padding: 20px; 
+            position: relative; 
+        }
+        .select-box {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 10;
+            padding: 5px;
+            font-size: 14px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background: white;
+        }
+        #chart { 
+            width: 100%; 
+            height: 75%; /* 调整图表高度 */
+        }
+        .week-line {
+            width: 90%;
+            height: 50px;
+            margin: 10px auto 0; /* 调整上边距，离图表更近 */
+            position: relative;
+            border-bottom: 2px solid #3a5985;
+        }
+        .week-line::after {
+            content: '➤';
+            position: absolute;
+            right: -20px;
+            bottom: -10px;
+            font-size: 20px;
+            color: #3a5985;
+        }
+        .week-dot {
+            position: absolute;
+            bottom: -5px;
+            width: 10px;
+            height: 10px;
+            background: #3a5985;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .week-dot.active {
+            width: 15px;
+            height: 15px;
+            background: #89afe0;
+        }
+        .week-label {
+            position: absolute;
+            bottom: -25px;
+            font-size: 12px;
+            color: #3a5985;
+        }
+        .week-info {
+            position: absolute;
+            top: 10px;
+            left: 20px;
+            font-size: 14px;
+            color: #3a5985;
+        }
+    </style>
+</head>
+<body>
+    <div class="chart-container">
+        <select class="select-box" id="collegeSelect">
+            
+            <option value="教育艺术学院">教育艺术学院</option>
+            
+            <option value="化学与材料工程学院">化学与材料工程学院</option>
+            
+            <option value="信息智能工程学院">信息智能工程学院</option>
+            
+            <option value="公共基础学院">公共基础学院</option>
+            
+            <option value="马克思主义学院">马克思主义学院</option>
+            
+            <option value="汽车与智能交通学院">汽车与智能交通学院</option>
+            
+            <option value="机械电气工程学院">机械电气工程学院</option>
+            
+            <option value="现代农业学院">现代农业学院</option>
+            
+            <option value="教务处">教务处</option>
+            
+            <option value="党委行政办公室">党委行政办公室</option>
+            
+        </select>
+        <div id="chart"></div>
+        <div class="week-line" id="weekLine">
+            <!-- 周一到周日的圆点和标签 -->
+            <div class="week-dot" style="left: 0%;" data-week="周一"></div>
+            <div class="week-label" style="left: 0%;">周一</div>
+            <div class="week-dot" style="left: 16.66%;" data-week="周二"></div>
+            <div class="week-label" style="left: 16.66%;">周二</div>
+            <div class="week-dot" style="left: 33.33%;" data-week="周三"></div>
+            <div class="week-label" style="left: 33.33%;">周三</div>
+            <div class="week-dot" style="left: 50%;" data-week="周四"></div>
+            <div class="week-label" style="left: 50%;">周四</div>
+            <div class="week-dot" style="left: 66.66%;" data-week="周五"></div>
+            <div class="week-label" style="left: 66.66%;">周五</div>
+            <div class="week-dot" style="left: 83.33%;" data-week="周六"></div>
+            <div class="week-label" style="left: 83.33%;">周六</div>
+            <div class="week-dot" style="left: 100%;" data-week="周日"></div>
+            <div class="week-label" style="left: 100%;">周日</div>
+        </div>
+        <div class="week-info" id="weekInfo">当前周：<span id="selectedWeek">周一</span></div>
+    </div>
+
+    <script>
+        var teacherData = [{"姓名": "程双儿", "排课量": 7}, {"姓名": "巩俞含", "排课量": 6}, {"姓名": "曹立汶", "排课量": 5}, {"姓名": "王艺璇", "排课量": 5}, {"姓名": "薄媛元", "排课量": 4}, {"姓名": "李雪瑶", "排课量": 7}, {"姓名": "常阳", "排课量": 5}, {"姓名": "马逸伦", "排课量": 7}, {"姓名": "赵银芳", "排课量": 1}, {"姓名": "靳忠宏", "排课量": 6}, {"姓名": "董家佑", "排课量": 4}, {"姓名": "刘星", "排课量": 3}, {"姓名": "高占鹏", "排课量": 2}, {"姓名": "罗梦娇", "排课量": 3}, {"姓名": "史正兵", "排课量": 2}, {"姓名": "赵兰兰", "排课量": 1}, {"姓名": "唐阳阳", "排课量": 7}, {"姓名": "刘玉阁", "排课量": 3}, {"姓名": "刘亚萍", "排课量": 3}, {"姓名": "赵雪宁", "排课量": 6}, {"姓名": "李富丽", "排课量": 1}, {"姓名": "高艺祯", "排课量": 8}, {"姓名": "于东晖", "排课量": 4}, {"姓名": "石云", "排课量": 6}, {"姓名": "赵伟华", "排课量": 3}, {"姓名": "李杰超", "排课量": 6}, {"姓名": "张萍", "排课量": 4}, {"姓名": "陈娟霞", "排课量": 8}, {"姓名": "王凡兰", "排课量": 4}, {"姓名": "孙思邈", "排课量": 7}, {"姓名": "曹镛", "排课量": 4}, {"姓名": "郭娜", "排课量": 3}, {"姓名": "马华丽", "排课量": 4}, {"姓名": "罗薇", "排课量": 3}, {"姓名": "向晓琼", "排课量": 8}];
+        var colorScheme = ["#e4e4e4", "#d5deef", "#b2caee", "#89afe0", "#3a5985"];
+        var chartDom = document.getElementById('chart');
+        var myChart = echarts.init(chartDom, 'light');
+
+        // 提取教师姓名和排课量
+        var teachers = teacherData.map(t => t['姓名']);
+        var courses = teacherData.map(t => t['排课量']);
+
+        // 配置图表
+        var option = {
+            title: { 
+                text: '教育艺术学院教师排课量', 
+                left: 'center', 
+                textStyle: { 
+                    fontSize: 16, 
+                    fontWeight: 'normal' // 标题不加粗
+                } 
+            },
+            tooltip: { trigger: 'axis' },
+            xAxis: {
+                type: 'category',
+                data: teachers,
+                axisLabel: { rotate: 45 }
+            },
+            yAxis: { 
+                type: 'value',
+                name: '节数',
+                max: 8
+            },
+            series: [{
+                data: courses,
+                type: 'bar',
+                itemStyle: { 
+                    color: function(params) {
+                        return colorScheme[params.dataIndex % colorScheme.length];
+                    }
+                },
+                barWidth: '60%'
+            }],
+            grid: { bottom: '20%' }
+        };
+
+        // 渲染图表
+        myChart.setOption(option);
+
+        // 下拉框事件监听（示例功能）
+        var select = document.getElementById('collegeSelect');
+        select.addEventListener('change', function() {
+            alert('你选择了：' + this.value); // 这里可以扩展为动态加载其他学院数据
+        });
+
+        // 周圆点点击事件
+        var weekDots = document.querySelectorAll('.week-dot');
+        var weekInfo = document.getElementById('weekInfo');
+        var selectedWeek = document.getElementById('selectedWeek');
+
+        weekDots.forEach(dot => {
+            dot.addEventListener('click', function() {
+                // 移除所有圆点的 active 类
+                weekDots.forEach(d => d.classList.remove('active'));
+                // 为当前圆点添加 active 类
+                this.classList.add('active');
+                // 更新选中的周信息
+                selectedWeek.textContent = this.getAttribute('data-week');
+            });
+        });
+
+        // 默认选中周一
+        weekDots[0].click();
+    </script>
+</body>
+</html>

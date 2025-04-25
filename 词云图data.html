@@ -1,0 +1,67 @@
+            var data = [
+                { name: '人工排课', value: 95 },
+                { name: '效能衰减', value: 90 },
+                { name: '隐性冲突', value: 88 },
+                { name: '资源配置失衡', value: 93 },
+                { name: '供需矛盾', value: 85 },
+                { name: '信息协同梗阻', value: 92 },
+                { name: '决策滞后', value: 87 },
+                { name: '动态适配薄弱', value: 89 },
+                { name: '需求响应不足', value: 86 },
+                { name: '跨校区协同失序', value: 94 },
+                { name: '资源整合低下', value: 91 },
+                { name: '考教时序缺位', value: 88 },
+                { name: '评价体系断裂', value: 85 },
+                { name: '技术迭代迟滞', value: 90 },
+                { name: '系统效能不足', value: 89 },
+                { name: '数据孤岛', value: 87 },
+                { name: '排课冲突', value: 92 },
+                { name: '教室错配', value: 86 },
+                { name: '通勤压力', value: 84 },
+                { name: '教学秩序紊乱', value: 88 },
+                { name: '资源浪费', value: 85 },
+                { name: '管理割裂', value: 89 },
+                { name: '考核失衡', value: 87 },
+                { name: '架构陈旧', value: 86 },
+                { name: '并发崩溃', value: 90 }
+            ];
+
+            var option = {
+                backgroundColor: '#fff',
+                tooltip: {
+                    show: true,
+                    formatter: '{b}: {c}'
+                },
+                series: [{
+                    type: 'wordCloud',
+                    shape: 'pentagon',
+                    left: 'center',
+                    top: 'center',
+                    width: '95%',
+                    height: '95%',
+                    sizeRange: [20, 80],
+                    rotationRange: [-45, 45],
+                    rotationStep: 15,
+                    gridSize: 12,
+                    drawOutOfBound: true,
+                    textStyle: {
+                        fontFamily: 'Microsoft YaHei',
+                        fontWeight: 'bold',
+                        color: () => {
+                            const colors = [
+                                '#5470c6', '#91cc75', '#fac858', '#ee6666',
+                                '#73c0de', '#3ba272', '#fc8452', '#9a60b4'
+                            ];
+                            return colors[Math.floor(Math.random() * colors.length)];
+                        }
+                    },
+                    emphasis: {
+                        focus: 'self',
+                        textStyle: {
+                            textShadowBlur: 10,
+                            textShadowColor: 'rgba(0,0,0,0.3)'
+                        }
+                    },
+                    data: data.sort((a, b) => b.value - a.value)
+                }]
+            };

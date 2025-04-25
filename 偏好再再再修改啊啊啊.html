@@ -1,0 +1,1359 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>组织管理 - 偏好设置</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="assets/css/style.css" rel="stylesheet">
+
+  <!-- Flatpickr CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
+<!-- Flatpickr JS -->
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/zh.js"></script>
+
+
+  <style>
+    .preference-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .preference-card {
+      background: white;
+      border-radius: 0.5rem;
+      box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+      overflow: hidden;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .preference-card .card-header {
+      background-color: rgba(245, 249, 251, 0.8);
+      border-bottom: 1px solid rgba(245, 249, 251, 0.8);
+      padding: 0.75rem 1.25rem;
+      font-weight: 600;
+      color: #3A5985;
+      font-size: 1rem;
+    }
+
+    .preference-card .card-body {
+      padding: 1.25rem;
+      flex: 1;
+    }
+
+    .form-group {
+      margin-bottom: 1rem;
+    }
+
+    .form-group label {
+      font-weight: 500;
+      margin-bottom: 0.4rem;
+      color: #495057;
+      font-size: 0.875rem;
+    }
+
+    .form-control, .form-select {
+      border-radius: 0.25rem;
+      font-size: 0.875rem;
+      padding: 0.375rem 0.75rem;
+    }
+
+    /* 星期选择和多选框组样式 */
+.weekday-checkbox-group, .period-checkbox-group {
+  display: flex;
+  flex-wrap: wrap;
+ gap: 0.4rem 0.4rem;
+  padding: 0.5rem;
+ /* background-color: #f8f9fa;*/
+  border-radius: 0.5rem;
+  margin-top: 0.8rem;
+}
+.period-checkbox-group{
+   display: flex;
+  flex-wrap: wrap;
+ gap: 0.4rem 1.8rem;
+  padding: 0.5rem;
+  /*background-color: #f8f9fa;*/
+  border-radius: 0.5rem;
+  margin-top: 0.8rem;
+
+}
+
+/* 日期范围选择器样式 */
+.date-range-picker {
+  position: relative;
+}
+
+.date-range-input {
+  background-color: white;
+  cursor: pointer;
+}
+
+/* 日历样式 */
+#dateRangeCalendar {
+  background: white;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+/* 时间段面板样式 */
+.time-slot-panel {
+  background-color: #f8f9fa;
+  padding: 15px;
+  border-radius: 5px;
+  margin-top: 15px;
+}
+
+.time-slots-list {
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.time-slot-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 12px;
+  margin-bottom: 5px;
+  background-color: white;
+  border-radius: 4px;
+}
+
+.time-slot-item .badge {
+  background-color: #3A5985;
+}
+
+/* 日历上的不可授课标记 */
+.unavailable-day {
+  position: relative;
+}
+
+.unavailable-day::after {
+  content: "";
+  position: absolute;
+  bottom: 2px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: #dc3545;
+}
+
+/* 日历上的悬停提示 */
+.day-tooltip {
+  position: absolute;
+  z-index: 100;
+  background: white;
+  padding: 5px 10px;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  font-size: 12px;
+  max-width: 200px;
+  display: none;
+}
+
+/* 时间范围组样式 */
+.time-range-group {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.time-range-group span {
+  color: #6c757d;
+  font-size: 0.9rem;
+}
+
+/* 响应式调整 */
+@media (max-width: 576px) {
+  .time-constraint-group {
+    grid-template-columns: 1fr;
+  }
+
+  .weekday-checkbox-group, .period-checkbox-group {
+    gap: 0.5rem 1rem;
+  }
+}
+    .form-check-input:checked {
+  background-color: rgba(13, 110, 251, 0.99);!important; /* 选中时的背景色 */
+  border-color: rgba(13, 110, 251, 0.99);  !important;  /* 选中时的边框色 */
+}
+
+    .btn-custom {
+      background-color: rgba(13, 110, 251, 0.99);
+      border-color: rgba(13, 110, 251, 0.99);
+      color: white;
+      font-size: 0.875rem;
+      padding: 0.3rem 0.6rem;
+      width:120px;!important;
+      place-content: center;!important;
+    }
+
+    .btn-custom:hover {
+      background-color: #6c8fb0;
+      border-color: #6c8fb0;
+    }
+
+    .time-range-group {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .time-range-group .form-control {
+      flex: 1;
+    }
+
+    .date-range-group {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+    }
+
+    .checkbox-group {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .form-check-input {
+      margin-top: 0;
+    }
+
+    .action-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
+    .action-buttons .btn {
+      min-width: 120px;
+    }
+
+    @media (max-width: 768px) {
+      .preference-container {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- ======= Header 顶部部分======= -->
+  <header id="header" class="header fixed-top d-flex align-items-center">
+
+    <div class="d-flex align-items-center justify-content-between">
+      <a href="index.html" class="logo d-flex align-items-center">
+        <img src="assets/img/logo.png" alt="">
+        <span class="d-none d-lg-block">课境云枢排课系统</span>
+      </a>
+      <i class="bi bi-list toggle-sidebar-btn"></i>
+    </div><!-- End Logo -->
+
+    <div class="search-bar">
+      <form class="search-form d-flex align-items-center" method="POST" action="#">
+        <input type="text" name="query" placeholder="Search" title="Enter search keyword">
+        <button type="submit" title="Search"><i class="bi bi-search"></i></button>
+      </form>
+    </div><!-- End Search Bar -->
+
+    <nav class="header-nav ms-auto">
+      <ul class="d-flex align-items-center">
+
+        <li class="nav-item d-block d-lg-none">
+          <a class="nav-link nav-icon search-bar-toggle " href="#">
+            <i class="bi bi-search"></i>
+          </a>
+        </li><!-- End Search Icon-->
+
+        <li class="nav-item dropdown">
+
+          <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
+            <i class="bi bi-bell"></i>
+            <span class="badge bg-primary badge-number">4</span>
+          </a><!-- End Notification Icon -->
+
+          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
+            <li class="dropdown-header">
+              You have 4 new notifications
+              <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li class="notification-item">
+              <i class="bi bi-exclamation-circle text-warning"></i>
+              <div>
+                <h4>Lorem Ipsum</h4>
+                <p>Quae dolorem earum veritatis oditseno</p>
+                <p>30 min. ago</p>
+              </div>
+            </li>
+
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li class="notification-item">
+              <i class="bi bi-x-circle text-danger"></i>
+              <div>
+                <h4>Atque rerum nesciunt</h4>
+                <p>Quae dolorem earum veritatis oditseno</p>
+                <p>1 hr. ago</p>
+              </div>
+            </li>
+
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li class="notification-item">
+              <i class="bi bi-check-circle text-success"></i>
+              <div>
+                <h4>Sit rerum fuga</h4>
+                <p>Quae dolorem earum veritatis oditseno</p>
+                <p>2 hrs. ago</p>
+              </div>
+            </li>
+
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li class="notification-item">
+              <i class="bi bi-info-circle text-primary"></i>
+              <div>
+                <h4>Dicta reprehenderit</h4>
+                <p>Quae dolorem earum veritatis oditseno</p>
+                <p>4 hrs. ago</p>
+              </div>
+            </li>
+
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li class="dropdown-footer">
+              <a href="#">Show all notifications</a>
+            </li>
+
+          </ul><!-- End Notification Dropdown Items -->
+
+        </li><!-- End Notification Nav -->
+
+        <li class="nav-item dropdown">
+
+          <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
+            <i class="bi bi-chat-left-text"></i>
+            <span class="badge bg-success badge-number">3</span>
+          </a><!-- End Messages Icon -->
+
+          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages">
+            <li class="dropdown-header">
+              You have 3 new messages
+              <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li class="message-item">
+              <a href="#">
+                <img src=" assets/img/messages-1.jpg" alt="" class="rounded-circle">
+                <div>
+                  <h4>Maria Hudson</h4>
+                  <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
+                  <p>4 hrs. ago</p>
+                </div>
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li class="message-item">
+              <a href="#">
+                <img src=" assets/img/messages-2.jpg" alt="" class="rounded-circle">
+                <div>
+                  <h4>Anna Nelson</h4>
+                  <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
+                  <p>6 hrs. ago</p>
+                </div>
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li class="message-item">
+              <a href="#">
+                <img src=" assets/img/messages-3.jpg" alt="" class="rounded-circle">
+                <div>
+                  <h4>David Muldon</h4>
+                  <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
+                  <p>8 hrs. ago</p>
+                </div>
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li class="dropdown-footer">
+              <a href="#">Show all messages</a>
+            </li>
+
+          </ul><!-- End Messages Dropdown Items -->
+
+        </li><!-- End Messages Nav -->
+
+        <li class="nav-item dropdown pe-3">
+
+          <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+            <img src=" assets/img/profile-img.jpg" alt="Profile" class="rounded-circle">
+            <span class="d-none d-md-block dropdown-toggle ps-2">K. Anderson</span>
+          </a><!-- End Profile Iamge Icon -->
+
+          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
+            <li class="dropdown-header">
+              <h6>Kevin Anderson</h6>
+              <span>Web Designer</span>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li>
+              <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
+                <i class="bi bi-person"></i>
+                <span>My Profile</span>
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li>
+              <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
+                <i class="bi bi-gear"></i>
+                <span>Account Settings</span>
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li>
+              <a class="dropdown-item d-flex align-items-center" href="pages-faq.html">
+                <i class="bi bi-question-circle"></i>
+                <span>Need Help?</span>
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li>
+              <a class="dropdown-item d-flex align-items-center" href="#">
+                <i class="bi bi-box-arrow-right"></i>
+                <span>Sign Out</span>
+              </a>
+            </li>
+
+          </ul><!-- End Profile Dropdown Items -->
+        </li><!-- End Profile Nav -->
+
+      </ul>
+    </nav><!-- End Icons Navigation -->
+
+  </header><!-- End Header -->
+
+  <!-- ======= Sidebar侧边栏！！ ======= -->
+  <aside id="sidebar" class="sidebar">
+
+    <ul class="sidebar-nav" id="sidebar-nav">
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href=" index.html">
+          <i class="bi bi-grid"></i>
+          <span>首页</span>
+        </a>
+      </li><!-- End Dashboard Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-menu-button-wide"></i><span>基本数据</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+          <li>
+            <a href=" 基本数据-教室数据-yes引入elelment改进版本又改进版--已确定！.html">
+              <i class="bi bi-circle"></i><span>教室数据</span>
+            </a>
+          </li>
+          <li>
+            <a href=" 教师数据.html">
+              <i class="bi bi-circle"></i><span>教师信息</span>
+            </a>
+          </li>
+          <li>
+            <a href="components-badges.html">
+              <i class="bi bi-circle"></i><span>学生信息</span>
+            </a>
+          </li>
+          <li>
+            <a href=" 课程库.html">
+              <i class="bi bi-circle"></i><span>课程库</span>
+            </a>
+          </li>
+          <li>
+            <a href=" 专业数据.html">
+              <i class="bi bi-circle"></i><span>专业数据</span>
+            </a>
+          </li>
+          <li>
+            <a href=" 班级数据.html">
+              <i class="bi bi-circle"></i><span>班级数据</span>
+            </a>
+          </li>
+          <li>
+            <a href=" 教学楼数据.html">
+              <i class="bi bi-circle"></i><span>教学楼信息</span>
+            </a>
+          </li>
+          <li>
+            <a href=" 部门数据.html">
+              <i class="bi bi-circle"></i><span>部门数据</span>
+            </a>
+          </li>
+          <li>
+            <a href=" 专业数据.html">
+              <i class="bi bi-circle"></i><span>专业方向</span>
+            </a>
+          </li>
+          <!--<li>
+            <a href="components-tabs.html">
+              <i class="bi bi-circle"></i><span>Tabs</span>
+            </a>
+          </li>
+          <li>
+            <a href="components-pagination.html">
+              <i class="bi bi-circle"></i><span>Pagination</span>
+            </a>
+          </li>
+          <li>
+            <a href="components-progress.html">
+              <i class="bi bi-circle"></i><span>Progress</span>
+            </a>
+          </li>
+          <li>
+            <a href="components-spinners.html">
+              <i class="bi bi-circle"></i><span>Spinners</span>
+            </a>
+          </li>-->
+         <!-- <li>
+            <a href="components-tooltips.html">
+              <i class="bi bi-circle"></i><span>Tooltips</span>
+            </a>
+          </li>-->
+        </ul>
+      </li><!-- End Components Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-journal-text"></i><span>智能排课</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+          <li>
+            <a href="forms-elements.html">
+              <i class="bi bi-circle"></i><span>Form Elements</span>
+            </a>
+          </li>
+          <li>
+            <a href="forms-layouts.html">
+              <i class="bi bi-circle"></i><span>Form Layouts</span>
+            </a>
+          </li>
+          <li>
+            <a href="forms-editors.html">
+              <i class="bi bi-circle"></i><span>Form Editors</span>
+            </a>
+          </li>
+          <li>
+            <a href="forms-validation.html">
+              <i class="bi bi-circle"></i><span>Form Validation</span>
+            </a>
+          </li>
+        </ul>
+      </li><!-- End Forms Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-layout-text-window-reverse"></i><span>组织管理</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="tables-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+          <li>
+            <a href=" 偏好设置3.html">
+              <i class="bi bi-circle"></i><span>偏好设置</span>
+            </a>
+          </li>
+          <li>
+            <a href=" 整个页面！！！！！！！组织管理%20请假审批--已确定！.html" >
+              <i class="bi bi-circle"></i><span>请假审批</span>
+            </a>
+          </li>
+        </ul>
+      </li><!-- End Tables Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#charts-nav" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-bar-chart"></i><span>排课表查询</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="charts-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+          <li>
+            <a href=" 班级课表.html">
+              <i class="bi bi-circle"></i><span>班级课表查询</span>
+            </a>
+          </li>
+          <li>
+            <a href="charts-apexcharts.html">
+              <i class="bi bi-circle"></i><span>学生课表查询</span>
+            </a>
+          </li>
+          <li>
+            <a href="charts-echarts.html">
+              <i class="bi bi-circle"></i><span>教师课表查询</span>
+            </a>
+          </li>
+          <li>
+            <a href=" 嵌入了elementuizz的页面-课程添加已确定！.html">
+              <i class="bi bi-circle"></i><span>添加课程</span>
+            </a>
+          </li>
+        </ul>
+      </li><!-- End Charts Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#icons-nav" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-gem"></i><span>排课规则</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="icons-nav" class="nav-content collapse show " data-bs-parent="#sidebar-nav">
+          <li>
+            <a href="排课规则-排课方案设置-yes大幅度修改了一下的.html">
+              <i class="bi bi-circle"></i><span>排课方案设置</span>
+            </a>
+          </li>
+          <li>
+            <a href=" 排课规则-禁排设置-yes-禁排第五次-原因显示混乱但增加维度-暂时确定.html">
+              <i class="bi bi-circle"></i><span>禁排设置</span>
+            </a>
+          </li>
+        </ul>
+      </li><!-- End Icons Nav -->
+
+      <li class="nav-heading">Pages</li>
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="users-profile.html">
+          <i class="bi bi-person"></i>
+          <span>统计信息</span>
+        </a>
+      </li><!-- End Profile Page Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="pages-faq.html">
+          <i class="bi bi-question-circle"></i>
+          <span>更多帮助</span>
+        </a>
+      </li><!-- End F.A.Q Page Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="pages-contact.html">
+          <i class="bi bi-envelope"></i>
+          <span>联系我们</span>
+        </a>
+      </li><!-- End Contact Page Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="pages-register.html">
+          <i class="bi bi-card-list"></i>
+          <span>后台管理</span>
+        </a>
+      </li><!-- End Register Page Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="pages-login.html">
+          <i class="bi bi-box-arrow-in-right"></i>
+          <span>登录问题</span>
+        </a>
+      </li><!-- End Login Page Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="pages-error-404.html">
+          <i class="bi bi-dash-circle"></i>
+          <span>Error 404</span>
+        </a>
+      </li><!-- End Error 404 Page Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="pages-blank.html">
+          <i class="bi bi-file-earmark"></i>
+          <span>Blank</span>
+        </a>
+      </li><!-- End Blank Page Nav -->
+
+    </ul>
+
+  </aside><!-- End Sidebar-->
+
+
+
+  <!-- ======= Main Content ======= -->
+  <main id="main" class="main">
+
+    <div class="pagetitle">
+      <h2 style="color: #3a5985">组织管理</h2>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href=" index.html">首页</a></li>
+          <li class="breadcrumb-item">组织管理</li>
+          <li class="breadcrumb-item active" style="color: #3a5985">偏好设置</li>
+        </ol>
+      </nav>
+    </div>
+
+    <section class="section">
+      <div class="container-fluid">
+        <!-- 第一行：时间相关设置 -->
+        <div class="preference-container">
+          <!-- 可授课时间段 -->
+          <div class="preference-card">
+            <div class="card-header">
+              <i class="bi bi-calendar-check me-2"></i>时间偏好设置
+            </div>
+            <div class="card-body">
+  <!-- 星期选择 - 改为多选框布局 -->
+  <div class="form-group">
+    <label>星期选择</label>
+    <div class="weekday-checkbox-group">
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="checkbox" id="monday" checked>
+        <label class="form-check-label" for="monday">周一</label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="checkbox" id="tuesday" checked>
+        <label class="form-check-label" for="tuesday">周二</label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="checkbox" id="wednesday" checked>
+        <label class="form-check-label" for="wednesday">周三</label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="checkbox" id="thursday" checked>
+        <label class="form-check-label" for="thursday">周四</label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="checkbox" id="friday" checked>
+        <label class="form-check-label" for="friday">周五</label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="checkbox" id="saturday">
+        <label class="form-check-label" for="saturday">周六</label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="checkbox" id="sunday">
+        <label class="form-check-label" for="sunday">周日</label>
+      </div>
+    </div>
+  </div>
+
+  <!-- 上课时间偏好 - 改为节次多选 -->
+  <div class="form-group">
+    <label>上课节次偏好</label>
+    <div class="period-checkbox-group">
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="checkbox" id="period1">
+        <label class="form-check-label" for="period1">1-2节</label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="checkbox" id="period2" checked>
+        <label class="form-check-label" for="period2">3-4节</label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="checkbox" id="period3" checked>
+        <label class="form-check-label" for="period3">5-6节</label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="checkbox" id="period4">
+        <label class="form-check-label" for="period4">7-8节</label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="checkbox" id="period5">
+        <label class="form-check-label" for="period5">9-10节</label>
+      </div>
+    </div>
+  </div>
+
+
+  <!--<button class="btn btn-custom  mt-0.8">
+    <i class="bi bi-check-circle"></i> 确认设置
+  </button>-->
+</div>
+          </div>
+
+          <!-- 不可授课时间段 -->
+          <!-- 不可授课时间段 -->
+<div class="preference-card">
+  <div class="card-header">
+    <i class="bi bi-calendar-x me-2"></i>不可授课时间段设置
+  </div>
+  <div class="card-body">
+    <!-- 日期范围选择 -->
+    <div class="form-group">
+      <label>选择日期范围</label>
+      <div class="date-range-picker">
+        <input type="text" class="form-control date-range-input" id="unavailableDateRange" readonly>
+      </div>
+      <div id="dateRangeCalendar" style="margin-top: 10px;"></div>
+    </div>
+
+    <!-- 时间段设置面板（初始隐藏） -->
+    <div class="time-slot-panel" id="timeSlotPanel" style="display: none;">
+      <div class="form-group">
+        <label>设置 <span id="selectedDate"></span> 的不可授课时间段</label>
+        <div class="time-range-group">
+          <input type="time" class="form-control time-slot-start" value="08:00">
+          <span>至</span>
+          <input type="time" class="form-control time-slot-end" value="12:00">
+          <button class="btn btn-sm btn-primary add-time-slot">添加</button>
+        </div>
+        <div class="form-group mt-2">
+          <label>原因</label>
+          <select class="form-select time-slot-reason">
+            <option>其他课程</option>
+            <option>会议</option>
+            <option>个人事务</option>
+            <option>假期</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="time-slots-list mt-3">
+        <h6>已设置的时间段</h6>
+        <div class="list-group" id="timeSlotsList"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+          <!-- 时间约束设置 -->
+          <div class="preference-card">
+            <div class="card-header">
+              <i class="bi bi-clock me-2"></i>时间约束设置
+            </div>
+            <div class="card-body">
+              <div class="form-group">
+                <label>最早授课时间</label>
+                <input type="time" class="form-control" value="08:00">
+              </div>
+              <div class="form-group">
+                <label>最晚授课时间</label>
+                <input type="time" class="form-control" value="21:00">
+              </div>
+              <div class="form-group">
+                <label>午休时间</label>
+                <div class="time-range-group">
+                  <input type="time" class="form-control" value="12:00" disabled>
+                  <span>至</span>
+                  <input type="time" class="form-control" value="13:00" disabled>
+                </div>
+                <small class="text-muted">系统默认午休时间</small>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 第二行：授课偏好设置 -->
+        <div class="preference-container">
+          <!-- 连续授课偏好 -->
+          <div class="preference-card">
+            <div class="card-header">
+              <i class="bi bi-arrow-repeat me-2"></i>连续授课偏好设置
+            </div>
+            <div class="card-body">
+              <div class="checkbox-group">
+                <input class="form-check-input" type="checkbox" id="continuousTeaching" checked>
+                <label class="form-check-label" for="continuousTeaching">接受连续授课</label>
+              </div>
+              <div class="form-group">
+                <label>最大连续节数</label>
+                <input type="number" class="form-control" min="1" max="5" value="2">
+              </div>
+              <div class="form-group">
+                <label>连续授课间隔时间 (分钟)</label>
+                <input type="number" class="form-control" min="0" max="120" value="10">
+              </div>
+              <div class="form-group">
+                <label>连续授课天数上限</label>
+                <input type="number" class="form-control" min="1" max="5" value="3">
+              </div>
+            </div>
+          </div>
+
+          <!-- 课程长度偏好 -->
+          <div class="preference-card">
+            <div class="card-header">
+              <i class="bi bi-hourglass me-2"></i>课程长度偏好设置
+            </div>
+            <div class="card-body">
+              <div class="form-group">
+                <label>单节课时长 (分钟)</label>
+                <input type="number" class="form-control" min="30" max="180" value="45">
+              </div>
+              <div class="form-group">
+                <label>连排最长节数</label>
+                <input type="number" class="form-control" min="0" max="5" value="2">
+              </div>
+              <div class="form-group">
+                <label>最小间隔时间 (小时)</label>
+                <input type="number" class="form-control" min="0" max="5" value="1">
+              </div>
+            </div>
+          </div>
+
+          <!-- 教师排课节数限制 -->
+          <div class="preference-card">
+            <div class="card-header">
+              <i class="bi bi-list-check me-2"></i>教师排课节数限制
+            </div>
+            <div class="card-body">
+              <div class="form-group">
+                <label>每天最大节数</label>
+                <input type="number" class="form-control" min="1" max="10" value="4">
+              </div>
+              <div class="form-group">
+                <label>每周最大节数</label>
+                <input type="number" class="form-control" min="1" max="50" value="20">
+              </div>
+              <div class="form-group">
+                <label>上午最大节次</label>
+                <input type="number" class="form-control" min="1" max="5" value="2">
+              </div>
+              <div class="form-group">
+                <label>下午最大节次</label>
+                <input type="number" class="form-control" min="1" max="5" value="3">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 第三行：教室相关设置 -->
+        <div class="preference-container">
+          <!-- 教室偏好 -->
+          <div class="preference-card">
+            <div class="card-header">
+              <i class="bi bi-building me-2"></i>教室偏好设置
+            </div>
+            <div class="card-body">
+              <div class="form-group">
+                <label>教室类型</label>
+                <select class="form-select">
+                  <option>无特殊要求</option>
+                  <option>普通教室</option>
+                  <option>多媒体教室</option>
+                  <option>实验室</option>
+                  <option>阶梯教室</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>教室位置</label>
+                <select class="form-select">
+                  <option>无特殊要求</option>
+                  <option>靠近办公室</option>
+                  <option>靠近实验室</option>
+                  <option>同一教学楼</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>教室设备</label>
+                <select class="form-select">
+                  <option>无特殊要求</option>
+                  <option>投影仪</option>
+                  <option>白板</option>
+                  <option>音响</option>
+                  <option>电脑</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- 教室容量匹配 -->
+          <div class="preference-card">
+            <div class="card-header">
+              <i class="bi bi-people me-2"></i>教室容量匹配设置
+            </div>
+            <div class="card-body">
+              <div class="form-group">
+                <label>最小容量匹配 (%)</label>
+                <input type="number" class="form-control" min="50" max="150" value="80">
+              </div>
+              <div class="form-group">
+                <label>最大容量匹配 (%)</label>
+                <input type="number" class="form-control" min="80" max="300" value="120">
+              </div>
+              <div class="checkbox-group">
+                <input class="form-check-input" type="checkbox" id="strictCapacity">
+                <label class="form-check-label" for="strictCapacity">严格执行容量匹配</label>
+              </div>
+              <div class="checkbox-group">
+                <input class="form-check-input" type="checkbox" id="allowOverflow" checked>
+                <label class="form-check-label" for="allowOverflow">允许少量超额 (10%)</label>
+              </div>
+            </div>
+          </div>
+
+          <!-- 授课地点集中 -->
+          <div class="preference-card">
+            <div class="card-header">
+              <i class="bi bi-geo-alt me-2"></i>教师授课地点集中设置
+            </div>
+            <div class="card-body">
+              <div class="checkbox-group">
+                <input class="form-check-input" type="checkbox" id="locationConcentration" checked>
+                <label class="form-check-label" for="locationConcentration">优先集中授课地点</label>
+              </div>
+              <div class="form-group">
+                <label>最大教学楼数量</label>
+                <input type="number" class="form-control" min="1" max="5" value="2">
+              </div>
+              <div class="form-group">
+                <label>同一天最大地点数</label>
+                <input type="number" class="form-control" min="1" max="5" value="2">
+              </div>
+              <div class="form-group">
+                <label>地点变更最小间隔 (小时)</label>
+                <input type="number" class="form-control" min="1" max="8" value="3">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 第四行：其他设置 -->
+        <div class="preference-container">
+          <!-- 合班班级设置 -->
+          <div class="preference-card">
+            <div class="card-header">
+              <i class="bi bi-collection me-2"></i>合班班级数量上限
+            </div>
+            <div class="card-body">
+              <div class="form-group">
+                <label>理论课最大合班数</label>
+                <input type="number" class="form-control" min="1" max="10" value="3">
+              </div>
+              <div class="form-group">
+                <label>实验课最大合班数</label>
+                <input type="number" class="form-control" min="1" max="10" value="2">
+              </div>
+              <div class="form-group">
+                <label>特殊合班说明</label>
+                <textarea class="form-control" rows="2" placeholder="如有特殊合班要求，请在此说明"></textarea>
+              </div>
+            </div>
+          </div>
+
+          <!-- 特殊课程显示 -->
+          <div class="preference-card">
+            <div class="card-header">
+              <i class="bi bi-star me-2"></i>特殊课程显示设置
+            </div>
+            <div class="card-body">
+              <div class="checkbox-group">
+                <input class="form-check-input" type="checkbox" id="highlightSpecial" checked>
+                <label class="form-check-label" for="highlightSpecial">高亮显示特殊课程</label>
+              </div>
+              <div class="form-group">
+                <label>特殊课程颜色</label>
+                <input type="color" class="form-control form-control-color" value="#ffcccc" title="选择颜色">
+              </div>
+              <div class="form-group">
+                <label>特殊课程类型</label>
+                <select class="form-select" multiple size="4">
+                  <option>实验课</option>
+                  <option>体育课</option>
+                  <option>双语课</option>
+                  <option>外教授课</option>
+                  <option>跨校区课程</option>
+                </select>
+                <small class="text-muted">按住Ctrl键多选</small>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 操作按钮 -->
+        <div class="action-buttons">
+          <button class="btn btn-primary">保存所有设置</button>
+          <button class="btn btn-outline-secondary">恢复默认设置</button>
+        </div>
+      </div>
+    </section>
+
+  </main>
+<script>
+  <!-- Vendor JS Files -->
+document.addEventListener('DOMContentLoaded', function() {
+  // 初始化日期范围选择器
+  const unavailableDates = {};
+  const dateRangeInput = document.getElementById('unavailableDateRange');
+  const timeSlotPanel = document.getElementById('timeSlotPanel');
+  const selectedDateSpan = document.getElementById('selectedDate');
+  const timeSlotsList = document.getElementById('timeSlotsList');
+
+  // 使用Flatpickr实现日期范围选择
+  const flatpickrInstance = flatpickr("#unavailableDateRange", {
+    mode: "range",
+    dateFormat: "Y-m-d",
+    onOpen: function(selectedDates, dateStr, instance) {
+      // 初始化日历
+      initDateRangeCalendar(selectedDates);
+    },
+    onChange: function(selectedDates, dateStr, instance) {
+      if (selectedDates.length === 2) {
+        // 初始化日历
+        initDateRangeCalendar(selectedDates);
+      }
+    }
+  });
+
+  // 初始化日期范围日历
+  function initDateRangeCalendar(selectedDates) {
+    const startDate = selectedDates[0];
+    const endDate = selectedDates[1];
+
+    // 清空日历容器
+    const calendarContainer = document.getElementById('dateRangeCalendar');
+    calendarContainer.innerHTML = '';
+
+    // 创建日历元素
+    const calendar = document.createElement('div');
+    calendar.className = 'calendar';
+    calendarContainer.appendChild(calendar);
+
+    // 生成日历标题
+    const title = document.createElement('div');
+    title.className = 'calendar-title';
+    title.textContent = `${formatDate(startDate)} 至 ${formatDate(endDate)}`;
+    calendar.appendChild(title);
+
+    // 生成日历表格
+    const table = document.createElement('table');
+    table.className = 'calendar-table';
+    calendar.appendChild(table);
+
+    // 生成表头（星期）
+    const thead = document.createElement('thead');
+    table.appendChild(thead);
+    const headerRow = document.createElement('tr');
+    thead.appendChild(headerRow);
+
+    const weekdays = ['日', '一', '二', '三', '四', '五', '六'];
+    weekdays.forEach(day => {
+      const th = document.createElement('th');
+      th.textContent = day;
+      headerRow.appendChild(th);
+    });
+
+    // 生成日历内容
+    const tbody = document.createElement('tbody');
+    table.appendChild(tbody);
+
+    // 计算日期范围内的所有日期
+    const currentDate = new Date(startDate);
+    let currentWeekRow = document.createElement('tr');
+    tbody.appendChild(currentWeekRow);
+
+    while (currentDate <= endDate) {
+      // 如果是周日且不是第一天，创建新行
+      if (currentDate.getDay() === 0 && currentDate > startDate) {
+        currentWeekRow = document.createElement('tr');
+        tbody.appendChild(currentWeekRow);
+      }
+
+      const td = document.createElement('td');
+      td.textContent = currentDate.getDate();
+      td.dataset.date = formatDate(currentDate);
+
+      // 标记已有不可授课时间的日期
+      if (unavailableDates[formatDate(currentDate)]) {
+        td.classList.add('unavailable-day');
+      }
+
+      // 添加点击事件
+      td.addEventListener('click', function() {
+        showTimeSlotPanel(this.dataset.date);
+      });
+
+      // 添加悬停事件
+      td.addEventListener('mouseenter', function(e) {
+        showDayTooltip(this, e);
+      });
+
+      td.addEventListener('mouseleave', function() {
+        hideDayTooltip();
+      });
+
+      currentWeekRow.appendChild(td);
+      currentDate.setDate(currentDate.getDate() + 1);
+    }
+  }
+
+  // 显示时间段设置面板
+  function showTimeSlotPanel(date) {
+    selectedDateSpan.textContent = date;
+    timeSlotPanel.style.display = 'block';
+
+    // 清空时间段列表
+    timeSlotsList.innerHTML = '';
+
+    // 如果已有设置，显示出来
+    if (unavailableDates[date]) {
+      unavailableDates[date].forEach(slot => {
+        addTimeSlotToList(date, slot.start, slot.end, slot.reason);
+      });
+    }
+  }
+
+  // 添加时间段到列表
+  function addTimeSlotToList(date, start, end, reason) {
+    const item = document.createElement('div');
+    item.className = 'list-group-item time-slot-item';
+    item.innerHTML = `
+      <span>${start} - ${end} (${reason})</span>
+      <span class="badge bg-danger delete-time-slot">删除</span>
+    `;
+
+    // 添加删除事件
+    item.querySelector('.delete-time-slot').addEventListener('click', function() {
+      removeTimeSlot(date, start, end);
+      item.remove();
+    });
+
+    timeSlotsList.appendChild(item);
+  }
+
+  // 保存时间段
+  document.querySelector('.add-time-slot').addEventListener('click', function() {
+    const date = selectedDateSpan.textContent;
+    const start = document.querySelector('.time-slot-start').value;
+    const end = document.querySelector('.time-slot-end').value;
+    const reason = document.querySelector('.time-slot-reason').value;
+
+    if (!unavailableDates[date]) {
+      unavailableDates[date] = [];
+    }
+
+    // 添加新时间段
+    unavailableDates[date].push({
+      start: start,
+      end: end,
+      reason: reason
+    });
+
+    // 更新列表
+    addTimeSlotToList(date, start, end, reason);
+
+    // 更新日历标记
+    updateCalendarMarks();
+  });
+
+  // 删除时间段
+  function removeTimeSlot(date, start, end) {
+    if (unavailableDates[date]) {
+      unavailableDates[date] = unavailableDates[date].filter(
+        slot => !(slot.start === start && slot.end === end)
+      );
+
+      if (unavailableDates[date].length === 0) {
+        delete unavailableDates[date];
+      }
+    }
+
+    updateCalendarMarks();
+  }
+
+  // 更新日历标记
+  function updateCalendarMarks() {
+    const cells = document.querySelectorAll('#dateRangeCalendar td[data-date]');
+    cells.forEach(cell => {
+      if (unavailableDates[cell.dataset.date]) {
+        cell.classList.add('unavailable-day');
+      } else {
+        cell.classList.remove('unavailable-day');
+      }
+    });
+  }
+
+  // 显示日期提示
+  function showDayTooltip(cell, event) {
+    const date = cell.dataset.date;
+    if (unavailableDates[date]) {
+      const tooltip = document.createElement('div');
+      tooltip.className = 'day-tooltip';
+      tooltip.innerHTML = unavailableDates[date].map(
+        slot => `${slot.start}-${slot.end}: ${slot.reason}`
+      ).join('<br>');
+
+      document.body.appendChild(tooltip);
+
+      const rect = cell.getBoundingClientRect();
+      tooltip.style.left = `${rect.left + window.scrollX}px`;
+      tooltip.style.top = `${rect.bottom + window.scrollY + 5}px`;
+      tooltip.style.display = 'block';
+
+      cell.tooltip = tooltip;
+    }
+  }
+
+  // 隐藏日期提示
+  function hideDayTooltip() {
+    const tooltips = document.querySelectorAll('.day-tooltip');
+    tooltips.forEach(tooltip => tooltip.remove());
+  }
+
+  // 格式化日期
+  function formatDate(date) {
+    const d = new Date(date);
+    const year = d.getFullYear();
+    const month = String(d.getMonth() + 1).padStart(2, '0');
+    const day = String(d.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  }
+});
+  </script>
+
+  <script src=" assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <!-- Template Main JS File -->
+  <script src=" assets/js/main.js"></script>
+</body>
+
+</html>
